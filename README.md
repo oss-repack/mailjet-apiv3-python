@@ -88,25 +88,14 @@ from mailjet_rest import Client
 import os
 api_key = os.environ['MJ_APIKEY_PUBLIC']
 api_secret = os.environ['MJ_APIKEY_PRIVATE']
-mailjet = Client(auth=(api_key, api_secret), version='v3.1')
+mailjet = Client(auth=(api_key, api_secret))
 data = {
-  'Messages': [
-    {
-      "From": {
-        "Email": "$SENDER_EMAIL",
-        "Name": "Me"
-      },
-      "To": [
-        {
-          "Email": "$RECIPIENT_EMAIL",
-          "Name": "You"
-        }
-      ],
-      "Subject": "My first Mailjet Email!",
-      "TextPart": "Greetings from Mailjet!",
-      "HTMLPart": "<h3>Dear passenger 1, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with you!"
-    }
-  ]
+	'FromEmail': '$SENDER_EMAIL',
+	'FromName': '$SENDER_NAME',
+	'Subject': 'Your email flight plan!',
+	'Text-part': 'Dear passenger, welcome to Mailjet! May the delivery force be with you!',
+	'Html-part': '<h3>Dear passenger, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!<br />May the delivery force be with you!',
+	'Recipients': [{'Email': '$RECIPIENT_EMAIL'}]
 }
 result = mailjet.send.create(data=data)
 print(result.status_code)
