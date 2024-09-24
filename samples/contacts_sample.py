@@ -202,7 +202,7 @@ def using_csv_with_atetime_contact_data():
 def monitor_the_import_progress():
     """GET https://api.mailjet.com/v3/REST/csvimport/$importjob_ID"""
     _id = "$importjob_ID"
-    return mailjet30.csvimport.get(id=id)
+    return mailjet30.csvimport.get(id=_id)
 
 
 def error_handling():

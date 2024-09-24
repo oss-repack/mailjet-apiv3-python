@@ -1,0 +1,16 @@
+name: mailjet
+channels:
+  - defaults
+dependencies:
+  # Python/plugins
+  - conda-forge::mypy
+  - python=3.11
+  - pytest
+  - pytest-cov
+  - pylint
+  - pip
+  # Python libraries
+  - mypy
+  - requests>=2.4.3
+  # Other
+  - pre-commit

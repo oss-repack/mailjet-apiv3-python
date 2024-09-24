@@ -2,6 +2,7 @@ import json
 import os
 
 from mailjet_rest import Client
+from samples.contacts_sample import edit_contact_data
 
 mailjet30 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
                          os.environ["MJ_APIKEY_PRIVATE"]))

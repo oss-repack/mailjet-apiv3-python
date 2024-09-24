@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# coding=utf-8
 
 import json
 import logging
@@ -7,19 +6,20 @@ import re
 
 import requests
 from requests.compat import urljoin
+
 from .utils.version import get_version
 
 requests.packages.urllib3.disable_warnings()
 
 
-def prepare_url(key):
+def prepare_url(key) -> str:
     """Replaces capital letters to lower one with dash prefix."""
     char_elem = key.group(0)
     if char_elem.isupper():
         return '-' + char_elem.lower()
 
 
-class Config(object):
+class Config:
     DEFAULT_API_URL = 'https://api.mailjet.com/'
     API_REF = 'http://dev.mailjet.com/email-api/v3/'
     version = 'v3'
@@ -47,7 +47,7 @@ class Config(object):
         return url, headers
 
 
-class Endpoint(object):
+class Endpoint:
 
     def __init__(self, url, headers, auth, action=None):
         self._url, self.headers, self._auth, self.action = url, headers, auth, action
@@ -84,7 +84,7 @@ class Endpoint(object):
         return api_call(self._auth, 'delete', self._url, action=self.action, headers=self.headers, resource_id=id, **kwargs)
 
 
-class Client(object):
+class Client:
 
     def __init__(self, auth=None, **kwargs):
         self.auth = auth
@@ -117,7 +117,7 @@ def api_call(auth, method, url, headers, data=None, filters=None, resource_id=No
     try:
         filters_str = None
         if filters:
-            filters_str = "&".join("%s=%s" % (k, v) for k, v in filters.items())
+            filters_str = "&".join(f"{k}={v}" for k, v in filters.items())
         response = req_method(url, data=data, params=filters_str, headers=headers, auth=auth,
                               timeout=timeout, verify=True, stream=False)
         return response
@@ -126,7 +126,7 @@ def api_call(auth, method, url, headers, data=None, filters=None, resource_id=No
         raise TimeoutError
     except requests.RequestException as e:
         raise ApiError(e)
-    except Exception as e:
+    except Exception:
         raise
 
 
@@ -148,7 +148,7 @@ def build_url(url, method, action=None, resource_id=None, action_id=None):
     if action:
         url += '/%s' % action
         if action_id:
-            url += '/{}'.format(action_id)
+            url += f"/{action_id}"
     if resource_id:
         url += '/%s' % str(resource_id)
     return url

@@ -1,13 +1,13 @@
 #!/usr/bin/env python
-# coding=utf-8
 
 import os
+
 from setuptools import find_packages, setup
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 PACKAGE_NAME = 'mailjet_rest'
 
-with open("README.md", "r") as fh:
+with open("README.md") as fh:
     long_description = fh.read()
 
 # Dynamically calculate the version based on mailjet_rest.VERSION.
@@ -28,19 +28,30 @@ setup(
     classifiers=['Development Status :: 4 - Beta',
                  'Environment :: Console',
                  'Intended Audience :: Developers',
-                 'License :: OSI Approved :: GNU General Public License (GPL)',
+                 'License :: OSI Approved :: MIT License',
                  'Natural Language :: English',
                  'Operating System :: OS Independent',
-                 'Programming Language :: Python :: 2.7',
-                 'Programming Language :: Python :: 3.5',
-                 'Programming Language :: Python :: 3.6',
+                 'Programming Language :: Python :: 3',
+                 'Programming Language :: Python :: 3.8',
+                 'Programming Language :: Python :: 3.8',
+                 'Programming Language :: Python :: 3.8',
+                 'Programming Language :: Python :: 3.8',
+                 'Programming Language :: Python :: 3.11',
+                 'Programming Language :: Python :: 3 :: Only',
+                 'Programming Language :: Python :: Implementation :: CPython',
+                 'Topic :: Communications :: Email',
                  'Topic :: Utilities'],
     license='MIT',
     keywords='Mailjet API v3 / v3.1 Python Wrapper',
 
     include_package_data=True,
+    python_requires=">=3.8",
     install_requires=['requests>=2.4.3'],
-    tests_require=['unittest'],
+    tests_require=['pytest'],
     entry_points={},
     packages=find_packages(),
+    project_urls={
+        "Documentation": "https://dev.mailjet.com",
+        "Source": "https://github.com/mailjet/mailjet-apiv3-python",
+    },
 )
