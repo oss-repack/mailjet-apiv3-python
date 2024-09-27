@@ -41,8 +41,7 @@ def by_adding_custom_content() -> Client:
 def test_your_campaign() -> Client:
     """POST https://api.mailjet.com/v3/REST/campaigndraft/$draft_ID/test"""
     _id = "$draft_ID"
-    data = {"Recipients": [
-        {"Email": "passenger@mailjet.com", "Name": "Passenger 1"}]}
+    data = {"Recipients": [{"Email": "passenger@mailjet.com", "Name": "Passenger 1"}]}
     return mailjet30.campaigndraft_test.create(id=_id, data=data)
 
 

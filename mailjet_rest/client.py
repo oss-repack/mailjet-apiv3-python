@@ -39,8 +39,7 @@ class Config:
         # Append version to URL.
         # Forward slash is ignored if present in self.version.
         url = urljoin(self.api_url, self.version + "/")
-        headers = {"Content-type": "application/json",
-                   "User-agent": self.user_agent}
+        headers = {"Content-type": "application/json", "User-agent": self.user_agent}
         if key.lower() == "contactslist_csvdata":
             url = urljoin(url, "DATA/")
             headers["Content-type"] = "text/plain"
@@ -113,8 +112,7 @@ class Endpoint:
             if ensure_ascii:
                 data = json.dumps(data)
             else:
-                data = json.dumps(
-                    data, ensure_ascii=False).encode(data_encoding)
+                data = json.dumps(data, ensure_ascii=False).encode(data_encoding)
         return api_call(
             self._auth,
             "post",
@@ -142,8 +140,7 @@ class Endpoint:
             if ensure_ascii:
                 data = json.dumps(data)
             else:
-                data = json.dumps(
-                    data, ensure_ascii=False).encode(data_encoding)
+                data = json.dumps(data, ensure_ascii=False).encode(data_encoding)
         return api_call(
             self._auth,
             "put",

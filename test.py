@@ -8,8 +8,7 @@ from mailjet_rest import Client
 
 class TestSuite(unittest.TestCase):
     def setUp(self) -> None:
-        self.auth = (os.environ["MJ_APIKEY_PUBLIC"],
-                     os.environ["MJ_APIKEY_PRIVATE"])
+        self.auth = (os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"])
         self.client = Client(auth=self.auth)
 
     def test_get_no_param(self) -> None:
@@ -48,8 +47,7 @@ class TestSuite(unittest.TestCase):
             self.assertTrue(post_contact.status_code == 201)
             contact_id = post_contact.json()["Data"][0]["ID"]
 
-        get_contact_list = self.client.contactslist.get(
-            filters={"limit": 1}).json()
+        get_contact_list = self.client.contactslist.get(filters={"limit": 1}).json()
         if get_contact_list["Count"] != 0:
             list_id = get_contact_list["Data"][0]["ID"]
         else:
@@ -98,8 +96,7 @@ class TestSuite(unittest.TestCase):
 
     def test_user_agent(self) -> None:
         self.client = Client(auth=self.auth, version="v3.1")
-        self.assertEqual(self.client.config.user_agent,
-                         "mailjet-apiv3-python/v1.3.3")
+        self.assertEqual(self.client.config.user_agent, "mailjet-apiv3-python/v1.3.3")
 
 
 if __name__ == "__main__":
