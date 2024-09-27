@@ -2,16 +2,24 @@ name: mailjet
 channels:
   - defaults
 dependencies:
-  # Python/plugins
-  - conda-forge::mypy
+  # Python
   - python=3.11
+  # build & host deps
+  - pip
+  # runtime deps
+  - requests>=2.4.3
+  # tests
   - pytest
   - pytest-cov
+  # linters & formatters
   - pylint
-  - pip
-  # Python libraries
+  - pycodestyle
+  - pydocstyle
+  - flake8
+  - autoflake8
+  - ruff
+  - pyupgrade
   - mypy
   - types-requests
-  - requests>=2.4.3
-  # Other
+  # other
   - pre-commit
