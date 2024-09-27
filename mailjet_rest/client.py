@@ -16,14 +16,14 @@ def prepare_url(key):
     """Replaces capital letters to lower one with dash prefix."""
     char_elem = key.group(0)
     if char_elem.isupper():
-        return '-' + char_elem.lower()
+        return "-" + char_elem.lower()
 
 
 class Config(object):
-    DEFAULT_API_URL = 'https://api.mailjet.com/'
-    API_REF = 'http://dev.mailjet.com/email-api/v3/'
-    version = 'v3'
-    user_agent = 'mailjet-apiv3-python/v' + get_version()
+    DEFAULT_API_URL = "https://api.mailjet.com/"
+    API_REF = "http://dev.mailjet.com/email-api/v3/"
+    version = "v3"
+    user_agent = "mailjet-apiv3-python/v" + get_version()
 
     def __init__(self, version=None, api_url=None):
         if version is not None:
@@ -33,17 +33,17 @@ class Config(object):
     def __getitem__(self, key):
         # Append version to URL.
         # Forward slash is ignored if present in self.version.
-        url = urljoin(self.api_url, self.version + '/')
-        headers = {'Content-type': 'application/json', 'User-agent': self.user_agent}
-        if key.lower() == 'contactslist_csvdata':
-            url = urljoin(url, 'DATA/')
-            headers['Content-type'] = 'text/plain'
-        elif key.lower() == 'batchjob_csverror':
-            url = urljoin(url, 'DATA/')
-            headers['Content-type'] = 'text/csv'
-        elif key.lower() != 'send' and self.version != 'v4':
-            url = urljoin(url, 'REST/')
-        url = url + key.split('_')[0].lower()
+        url = urljoin(self.api_url, self.version + "/")
+        headers = {"Content-type": "application/json", "User-agent": self.user_agent}
+        if key.lower() == "contactslist_csvdata":
+            url = urljoin(url, "DATA/")
+            headers["Content-type"] = "text/plain"
+        elif key.lower() == "batchjob_csverror":
+            url = urljoin(url, "DATA/")
+            headers["Content-type"] = "text/csv"
+        elif key.lower() != "send" and self.version != "v4":
+            url = urljoin(url, "REST/")
+        url = url + key.split("_")[0].lower()
         return url, headers
 
 
@@ -56,7 +56,7 @@ class Endpoint(object):
         return self._doc
 
     def _get(self, filters=None, action_id=None, id=None, **kwargs):
-        return api_call(self._auth, 'get', self._url, headers=self.headers, action=self.action, action_id=action_id, filters=filters, resource_id=id, **kwargs)
+        return api_call(self._auth, "get", self._url, headers=self.headers, action=self.action, action_id=action_id, filters=filters, resource_id=id, **kwargs)
 
     def get_many(self, filters=None, action_id=None, **kwargs):
         return self._get(filters=filters, action_id=action_id **kwargs)
@@ -65,46 +65,46 @@ class Endpoint(object):
         return self._get(id=id, filters=filters, action_id=action_id, **kwargs)
 
     def create(self, data=None, filters=None, id=None, action_id=None, ensure_ascii=True, data_encoding="utf-8", **kwargs):
-        if self.headers['Content-type'] == 'application/json':
+        if self.headers["Content-type"] == "application/json":
             if ensure_ascii:
                 data = json.dumps(data)
             else:
                 data = json.dumps(data, ensure_ascii=False).encode(data_encoding)
-        return api_call(self._auth, 'post', self._url, headers=self.headers, resource_id=id, data=data, action=self.action, action_id=action_id, filters=filters, **kwargs)
+        return api_call(self._auth, "post", self._url, headers=self.headers, resource_id=id, data=data, action=self.action, action_id=action_id, filters=filters, **kwargs)
 
     def update(self, id, data, filters=None, action_id=None, ensure_ascii=True, data_encoding="utf-8", **kwargs):
-        if self.headers['Content-type'] == 'application/json':
+        if self.headers["Content-type"] == "application/json":
             if ensure_ascii:
                 data = json.dumps(data)
             else:
                 data = json.dumps(data, ensure_ascii=False).encode(data_encoding)
-        return api_call(self._auth, 'put', self._url, resource_id=id, headers=self.headers, data=data, action=self.action, action_id=action_id, filters=filters, **kwargs)
+        return api_call(self._auth, "put", self._url, resource_id=id, headers=self.headers, data=data, action=self.action, action_id=action_id, filters=filters, **kwargs)
 
     def delete(self, id, **kwargs):
-        return api_call(self._auth, 'delete', self._url, action=self.action, headers=self.headers, resource_id=id, **kwargs)
+        return api_call(self._auth, "delete", self._url, action=self.action, headers=self.headers, resource_id=id, **kwargs)
 
 
 class Client(object):
 
     def __init__(self, auth=None, **kwargs):
         self.auth = auth
-        version = kwargs.get('version', None)
-        api_url = kwargs.get('api_url', None)
+        version = kwargs.get("version", None)
+        api_url = kwargs.get("api_url", None)
         self.config = Config(version=version, api_url=api_url)
 
     def __getattr__(self, name):
         name = re.sub(r"[A-Z]", prepare_url, name)
-        split = name.split('_')
+        split = name.split("_")
         #identify the resource
         fname = split[0]
         action = None
         if (len(split) > 1):
             #identify the sub resource (action)
             action = split[1]
-            if action == 'csvdata':
-                action = 'csvdata/text:plain'
-            if action == 'csverror':
-                action = 'csverror/text:csv'
+            if action == "csvdata":
+                action = "csvdata/text:plain"
+            if action == "csverror":
+                action = "csverror/text:csv"
         url, headers = self.config[name]
         return type(fname, (Endpoint,), {})(url=url, headers=headers, action=action, auth=self.auth)
 
@@ -131,12 +131,12 @@ def api_call(auth, method, url, headers, data=None, filters=None, resource_id=No
 
 
 def build_headers(resource, action=None, extra_headers=None):
-    headers = {'Content-type': 'application/json'}
+    headers = {"Content-type": "application/json"}
 
-    if resource.lower() == 'contactslist' and action.lower() == 'csvdata':
-        headers = {'Content-type': 'text/plain'}
-    elif resource.lower() == 'batchjob' and action.lower() == 'csverror':
-        headers = {'Content-type': 'text/csv'}
+    if resource.lower() == "contactslist" and action.lower() == "csvdata":
+        headers = {"Content-type": "text/plain"}
+    elif resource.lower() == "batchjob" and action.lower() == "csverror":
+        headers = {"Content-type": "text/csv"}
 
     if extra_headers:
         headers.update(extra_headers)
@@ -146,11 +146,11 @@ def build_headers(resource, action=None, extra_headers=None):
 
 def build_url(url, method, action=None, resource_id=None, action_id=None):
     if action:
-        url += '/%s' % action
+        url += "/%s" % action
         if action_id:
-            url += '/{}'.format(action_id)
+            url += "/{}".format(action_id)
     if resource_id:
-        url += '/%s' % str(resource_id)
+        url += "/%s" % str(resource_id)
     return url
 
 
@@ -158,13 +158,13 @@ def parse_response(response, debug=False):
     data = response.json()
 
     if debug:
-        logging.debug('REQUEST: %s' % response.request.url)
-        logging.debug('REQUEST_HEADERS: %s' % response.request.headers)
-        logging.debug('REQUEST_CONTENT: %s' % response.request.body)
+        logging.debug("REQUEST: %s" % response.request.url)
+        logging.debug("REQUEST_HEADERS: %s" % response.request.headers)
+        logging.debug("REQUEST_CONTENT: %s" % response.request.body)
 
-        logging.debug('RESPONSE: %s' % response.content)
-        logging.debug('RESP_HEADERS: %s' % response.headers)
-        logging.debug('RESP_CODE: %s' % response.status_code)
+        logging.debug("RESPONSE: %s" % response.content)
+        logging.debug("RESP_HEADERS: %s" % response.headers)
+        logging.debug("RESP_CODE: %s" % response.status_code)
 
     return data
 
