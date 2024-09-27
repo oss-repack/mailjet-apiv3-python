@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 
 import os
+from pathlib import Path
 
 from setuptools import find_packages, setup
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 PACKAGE_NAME = "mailjet_rest"
 
-with open("README.md") as fh:
-    long_description = fh.read()
+
+long_description = Path("README.md").read_text()
 
 # Dynamically calculate the version based on mailjet_rest.VERSION.
 version = "latest"
