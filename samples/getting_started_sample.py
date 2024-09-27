@@ -3,35 +3,29 @@ import os
 
 from mailjet_rest import Client
 
-mailjet30 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]))
+mailjet30 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"])
+)
 
-mailjet31 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]),
-                   version="v3.1")
+mailjet31 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"]),
+    version="v3.1",
+)
 
 
-def send_messages():
+def send_messages() -> Client:
     """POST https://api.mailjet.com/v3.1/send"""
     data = {
         "Messages": [
             {
-                "From": {
-                    "Email": "pilot@mailjet.com",
-                    "Name": "Mailjet Pilot"
-                },
-                "To": [
-                    {
-                        "Email": "passenger1@mailjet.com",
-                        "Name": "passenger 1"
-                    }
-                ],
+                "From": {"Email": "pilot@mailjet.com", "Name": "Mailjet Pilot"},
+                "To": [{"Email": "passenger1@mailjet.com", "Name": "passenger 1"}],
                 "Subject": "Your email flight plan!",
                 "TextPart": "Dear passenger 1, welcome to Mailjet! May the "
-                            "delivery force be with you!",
-                "HTMLPart": "<h3>Dear passenger 1, welcome to <a href=\"https"
-                            "://www.mailjet.com/\">Mailjet</a>!<br />May the "
-                            "delivery force be with you!"
+                "delivery force be with you!",
+                "HTMLPart": '<h3>Dear passenger 1, welcome to <a href="https'
+                '://www.mailjet.com/">Mailjet</a>!<br />May the '
+                "delivery force be with you!",
             }
         ],
         "SandboxMode": True,  # Remove to send real message.
@@ -39,7 +33,7 @@ def send_messages():
     return mailjet31.send.create(data=data)
 
 
-def retrieve_messages_from_campaign():
+def retrieve_messages_from_campaign() -> Client:
     """GET https://api.mailjet.com/v3/REST/message?CampaignID=$CAMPAIGNID"""
     filters = {
         "CampaignID": "*****",  # Put real ID to make it work.
@@ -47,21 +41,21 @@ def retrieve_messages_from_campaign():
     return mailjet30.message.get(filters=filters)
 
 
-def retrieve_message():
+def retrieve_message() -> Client:
     """GET https://api.mailjet.com/v3/REST/message/$MESSAGE_ID"""
     _id = "*****************"  # Put real ID to make it work.
     return mailjet30.message.get(_id)
 
 
-def view_message_history():
+def view_message_history() -> Client:
     """GET https://api.mailjet.com/v3/REST/messagehistory/$MESSAGE_ID"""
     _id = "*****************"  # Put real ID to make it work.
     return mailjet30.messagehistory.get(_id)
 
 
-def retrieve_statistic():
+def retrieve_statistic() -> Client:
     """GET https://api.mailjet.com/v3/REST/statcounters?CounterSource=APIKey
-                \\&CounterTiming=Message\\&CounterResolution=Lifetime
+    \\&CounterTiming=Message\\&CounterResolution=Lifetime
     """
     filters = {
         "CounterSource": "APIKey",
@@ -72,7 +66,7 @@ def retrieve_statistic():
 
 
 if __name__ == "__main__":
-    result = retrieve_statistic()
+    result: Client = retrieve_statistic()
     print(result.status_code)
     try:
         print(json.dumps(result.json(), indent=4))

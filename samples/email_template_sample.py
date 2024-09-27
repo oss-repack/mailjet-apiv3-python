@@ -3,15 +3,17 @@ import os
 
 from mailjet_rest import Client
 
-mailjet30 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]))
+mailjet30 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"])
+)
 
-mailjet31 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]),
-                   version="v3.1")
+mailjet31 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"]),
+    version="v3.1",
+)
 
 
-def create_a_template():
+def create_a_template() -> Client:
     """POST https://api.mailjet.com/v3/REST/template"""
     data = {
         "Author": "John Doe",
@@ -25,41 +27,33 @@ def create_a_template():
         "Name": "Promo Codes",
         "OwnerType": "user",
         "Presets": "string",
-        "Purposes": "array"
+        "Purposes": "array",
     }
     return mailjet30.template.create(data=data)
 
 
-def create_a_template_detailcontent():
+def create_a_template_detailcontent() -> Client:
     """POST https://api.mailjet.com/v3/REST/template/$template_ID/detailcontent"""
     _id = "$template_ID"
     data = {
         "Headers": "",
         "Html-part": "<h3>Dear passenger, welcome to Mailjet!</h3><br />May the delivery force be with you!",
         "MJMLContent": "",
-        "Text-part": "Dear passenger, welcome to Mailjet! May the delivery force be with you!"
+        "Text-part": "Dear passenger, welcome to Mailjet! May the delivery force be with you!",
     }
     return mailjet30.template_detailcontent.create(id=_id, data=data)
 
 
-def use_templates_with_send_api():
+def use_templates_with_send_api() -> Client:
     """POST https://api.mailjet.com/v3.1/send"""
     data = {
         "Messages": [
             {
-                "From": {
-                    "Email": "pilot@mailjet.com",
-                    "Name": "Mailjet Pilot"
-                },
-                "To": [
-                    {
-                        "Email": "passenger1@mailjet.com",
-                        "Name": "passenger 1"
-                    }
-                ],
+                "From": {"Email": "pilot@mailjet.com", "Name": "Mailjet Pilot"},
+                "To": [{"Email": "passenger1@mailjet.com", "Name": "passenger 1"}],
                 "TemplateID": 1,
                 "TemplateLanguage": True,
-                "Subject": "Your email flight plan!"
+                "Subject": "Your email flight plan!",
             }
         ]
     }
@@ -67,7 +61,7 @@ def use_templates_with_send_api():
 
 
 if __name__ == "__main__":
-    result = create_a_template()
+    result: Client = create_a_template()
     print(result.status_code)
     try:
         print(json.dumps(result.json(), indent=4))

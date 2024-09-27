@@ -20,16 +20,10 @@ repos:
         args: [ "--maxkb=500" ]
       - id: fix-byte-order-marker
       - id: check-case-conflict
-      #- id: check-executables-have-shebangs
       # Fails if there are any ">>>>>" lines in files due to merge conflicts.
       - id: check-merge-conflict
-      #- id: check-shebang-scripts-are-executable
       # ensure syntaxes are valid
       - id: check-toml
-      # Attempts to load all yaml files to verify syntax; unsafe: only check syntax, do not load yaml
-#      - id: check-yaml
-#        args: ["--unsafe"]
-#        exclude: ^(conda\.)?(recipe|data)/meta.yaml
       - id: debug-statements
       - id: detect-private-key
       # Makes sure files end in a newline and only a newline;
@@ -40,23 +34,32 @@ repos:
         args: [ --markdown-linebreak-ext=md ]
       # Sort requirements in requirements.txt files.
       - id: requirements-txt-fixer
-      # Prevent committing directly to trunk (since Bitbucket wants us to pay for this feature)
-      #- id: no-commit-to-branch
-      #  args: [ "--branch=main" ]
+      # Prevent committing directly to trunk
+      - id: no-commit-to-branch
+        args: [ "--branch=master" ]
       # Detects the presence of private keys
       - id: detect-private-key
 
+  - repo: https://github.com/jorisroovers/gitlint
+    rev: v0.19.1
+    hooks:
+      - id: gitlint
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.3.0
+    hooks:
+      - id: codespell
+        args: [--write]
+
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.29.2
+    hooks:
+      - id: check-github-workflows
 
   - repo: https://github.com/akaihola/darker
     rev: v2.1.1
     hooks:
       - id: darker
-
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
-        exclude: ^docs/
 
   - repo: https://github.com/PyCQA/autoflake
     rev: v2.3.1
@@ -68,14 +71,14 @@ repos:
           - --remove-unused-variable
           - --ignore-init-module-imports
 
-#  - repo: https://github.com/pre-commit/mirrors-autopep8
-#    rev: v2.0.4
-#    hooks:
-#      - id: autopep8
-#        exclude: ^docs/
+  - repo: https://github.com/pre-commit/mirrors-autopep8
+    rev: v2.0.4
+    hooks:
+      - id: autopep8
+        exclude: ^docs/
 
 #  - repo: https://github.com/pycqa/flake8
-#    rev: 6.1.0
+#    rev: 7.1.1
 #    hooks:
 #    -   id: flake8
 #        additional_dependencies:
@@ -91,73 +94,49 @@ repos:
         args:
           - --exit-zero
 
-#  - repo: https://github.com/psf/black
-#    rev: 23.12.1
-#    hooks:
-#      - id: black
-#        exclude: ^docs/
-
-#  - repo: https://github.com/charliermarsh/ruff-pre-commit
-#    # Ruff version.
-#    rev: v0.1.9
-#    hooks:
-#      - id: ruff
-#        args: [--fix, --exit-non-zero-on-fix]
-
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.17.0
     hooks:
       - id: pyupgrade
-        args: [--py37-plus, --keep-runtime-typing]
+        args: [--py38-plus, --keep-runtime-typing]
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     # Ruff version.
-    rev: v0.6.7
+    rev: v0.6.8
     hooks:
+      # Run the linter.
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
+      # Run the formatter.
+#      - id: ruff-format
 
-  - repo: https://github.com/lovesegfault/beautysh
-    rev: v6.2.1
-    hooks:
-      - id: beautysh
-
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.10
-    hooks:
-      - id: bandit
-        files: ^gh-bridge/ghpeb/webhook.py
-        args: [--skip, B101, --recursive, common]
-        # ignore all tests, not just tests data
-        #exclude: ^tests/
-
-  - repo: https://github.com/jorisroovers/gitlint
-    rev: v0.19.1
-    hooks:
-      - id: gitlint
-
-  #- repo: https://github.com/codespell-project/codespell
-  #  rev: v2.2.5
-  #  hooks:
-  #    - id: codespell
-  #      args: [--write]
-  #      exclude: ^finder/data/
-
-  - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.29.2
-    hooks:
-      - id: check-github-workflows
+  -   repo: https://github.com/dosisod/refurb
+      rev: v2.0.0
+      hooks:
+      -   id: refurb
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.11.2
     hooks:
     -   id: mypy
+        args:
+          [
+            --config-file=./pyproject.toml,
+          ]
 
-  - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.17
-    hooks:
-      - id: mdformat
-        additional_dependencies:
-          # gfm = GitHub Flavored Markdown
-          - mdformat-gfm
-          - mdformat-black
+#  - repo: https://github.com/executablebooks/mdformat
+#    rev: 0.7.17
+#    hooks:
+#      - id: mdformat
+#        additional_dependencies:
+#          # gfm = GitHub Flavored Markdown
+#          - mdformat-gfm
+#          - mdformat-black
+
+#  - repo: https://github.com/PyCQA/bandit
+#    rev: 1.7.10
+#    hooks:
+#      - id: bandit
+#        args: ["-r", "."]
+#        # ignore all tests, not just tests data
+#        exclude: ^tests/
