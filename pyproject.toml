@@ -49,12 +49,15 @@ target-version = "py311"
 # McCabe complexity (`C901`) by default.
 # Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default, ('UP') is pyupgrade.
 # "ERA" - Found commented-out code
-select = ["E", "F", "W", "N", "UP", "B", "A", "C4", "PT", "SIM", "PD", "PLE", "RUF"]
+# see https://docs.astral.sh/ruff/rules/#rules
+select = ["A", "B", "C4", "E", "EM", "ERA", "EXE", "F", "FA", "FURB", "G", "ICN", "LOG", "N", "PD", "PERF", "PIE", "PLE", "PLW", "PT", "PTH", "PYI", "Q", "RET", "RUF", "S", "SIM", "UP", "W"]
 
-extend-select = ["W", "N", "UP", "B", "A", "C4", "PT", "SIM", "PD", "PLE", "RUF"]
+#extend-select = ["W", "N", "UP", "B", "A", "C4", "PT", "SIM", "PD", "PLE", "RUF"]
 # Never enforce `E501` (line length violations).
 ignore = [
+    # pycodestyle (E, W)
     'E501',
+    # Pyflakes (`F`)
     "F401",
     'E722',
     'E741',
@@ -67,6 +70,7 @@ ignore = [
     'B008',
     'PD901',
     'PD015',
+    # pep8-naming (N)
     'N802',
     'N806',
     # TODO: PLE0604 Invalid object in `__all__`, must contain only strings
@@ -74,7 +78,7 @@ ignore = [
     'RUF012',
     # TODO: PT009 Use a regular `assert` instead of unittest-style `assertTrue`
     'PT009',
-    # Skip for logging: UP031 Use format specifiers instead of percent format
+    # pyupgrade (UP): Skip for logging: UP031 Use format specifiers instead of percent format
     'UP031'
 ]
 
