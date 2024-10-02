@@ -59,7 +59,7 @@ class Endpoint:
         return api_call(self._auth, "get", self._url, headers=self.headers, action=self.action, action_id=action_id, filters=filters, resource_id=id, **kwargs)
 
     def get_many(self, filters=None, action_id=None, **kwargs):
-        return self._get(filters=filters, action_id=action_id **kwargs)
+        return self._get(filters=filters, action_id=action_id, **kwargs)
 
     def get(self, id=None, filters=None, action_id=None, **kwargs):
         return self._get(id=id, filters=filters, action_id=action_id, **kwargs)

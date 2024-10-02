@@ -15,7 +15,6 @@ mailjet31 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
 if __name__ == "__main__":
     from samples.contacts_sample import edit_contact_data
 
-
     result = edit_contact_data()
     print(result.status_code)
     try:
