@@ -10,4 +10,4 @@ def get_version(version=None):
         version = VERSION
     if len(version) != 3:
         raise ValueError("The tuple 'version' must contain 3 items")
-    return "{0}.{1}.{2}".format(*(x for x in version))
+    return "{}.{}.{}".format(*(x for x in version))
