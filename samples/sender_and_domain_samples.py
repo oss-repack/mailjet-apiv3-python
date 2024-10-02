@@ -4,12 +4,14 @@ import os
 from mailjet_rest import Client
 
 
-mailjet30 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]))
+mailjet30 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"])
+)
 
-mailjet31 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]),
-                   version="v3.1")
+mailjet31 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"]),
+    version="v3.1",
+)
 
 
 def validate_an_entire_domain():
@@ -46,7 +48,7 @@ def use_a_sender_on_all_api_keys():
     """POST https://api.mailjet.com/v3/REST/metasender"""
     data = {
         "Description": "Metasender 1 - used for Promo emails",
-        "Email": "pilot@mailjet.com"
+        "Email": "pilot@mailjet.com",
     }
     return mailjet30.metasender.create(data=data)
 

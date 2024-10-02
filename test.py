@@ -7,12 +7,8 @@ from mailjet_rest import Client
 
 
 class TestSuite(unittest.TestCase):
-
     def setUp(self):
-        self.auth = (
-            os.environ["MJ_APIKEY_PUBLIC"],
-            os.environ["MJ_APIKEY_PRIVATE"]
-        )
+        self.auth = (os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"])
         self.client = Client(auth=self.auth)
 
     def test_get_no_param(self):
@@ -38,10 +34,16 @@ class TestSuite(unittest.TestCase):
         if get_contact["Count"] != 0:
             contact_id = get_contact["Data"][0]["ID"]
         else:
-            contact_random_email = "".join(secrets.choice(
-                string.ascii_uppercase + string.digits) for _ in range(10)) + "@mailjet.com"
+            contact_random_email = (
+                "".join(
+                    secrets.choice(string.ascii_uppercase + string.digits)
+                    for _ in range(10)
+                )
+                + "@mailjet.com"
+            )
             post_contact = self.client.contact.create(
-                data={"Email": contact_random_email})
+                data={"Email": contact_random_email}
+            )
             self.assertTrue(post_contact.status_code == 201)
             contact_id = post_contact.json()["Data"][0]["ID"]
 
@@ -49,23 +51,23 @@ class TestSuite(unittest.TestCase):
         if get_contact_list["Count"] != 0:
             list_id = get_contact_list["Data"][0]["ID"]
         else:
-            contact_list_random_name = "".join(secrets.choice(
-                string.ascii_uppercase + string.digits) for _ in range(10)) + "@mailjet.com"
+            contact_list_random_name = (
+                "".join(
+                    secrets.choice(string.ascii_uppercase + string.digits)
+                    for _ in range(10)
+                )
+                + "@mailjet.com"
+            )
             post_contact_list = self.client.contactslist.create(
-                data={"Name": contact_list_random_name})
+                data={"Name": contact_list_random_name}
+            )
             self.assertTrue(post_contact_list.status_code == 201)
             list_id = post_contact_list.json()["Data"][0]["ID"]
 
-        data = {
-            "ContactsLists": [
-                {
-                    "ListID": list_id,
-                    "Action": "addnoforce"
-                }
-            ]
-        }
+        data = {"ContactsLists": [{"ListID": list_id, "Action": "addnoforce"}]}
         result_add_list = self.client.contact_managecontactslists.create(
-            id=contact_id, data=data)
+            id=contact_id, data=data
+        )
         self.assertTrue(result_add_list.status_code == 201)
 
         result = self.client.contact_getcontactslists.get(contact_id).json()
@@ -74,30 +76,26 @@ class TestSuite(unittest.TestCase):
     def test_get_with_id_filter(self):
         result_contact = self.client.contact.get(filters={"limit": 1}).json()
         result_contact_with_id = self.client.contact.get(
-            filter={"Email": result_contact["Data"][0]["Email"]}).json()
+            filter={"Email": result_contact["Data"][0]["Email"]}
+        ).json()
         self.assertTrue(
-            result_contact_with_id["Data"][0]["Email"] == result_contact["Data"][0]["Email"])
+            result_contact_with_id["Data"][0]["Email"]
+            == result_contact["Data"][0]["Email"]
+        )
 
     def test_post_with_no_param(self):
         result = self.client.sender.create(data={}).json()
         self.assertTrue("StatusCode" in result and result["StatusCode"] == 400)
 
     def test_client_custom_version(self):
-        self.client = Client(
-            auth=self.auth,
-            version="v3.1"
-        )
+        self.client = Client(auth=self.auth, version="v3.1")
         self.assertEqual(self.client.config.version, "v3.1")
         self.assertEqual(
-            self.client.config["send"][0],
-            "https://api.mailjet.com/v3.1/send"
+            self.client.config["send"][0], "https://api.mailjet.com/v3.1/send"
         )
 
     def test_user_agent(self):
-        self.client = Client(
-            auth=self.auth,
-            version="v3.1"
-        )
+        self.client = Client(auth=self.auth, version="v3.1")
         self.assertEqual(self.client.config.user_agent, "mailjet-apiv3-python/v1.3.3")
 
 

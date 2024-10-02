@@ -4,12 +4,14 @@ import os
 from mailjet_rest import Client
 
 
-mailjet30 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]))
+mailjet30 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"])
+)
 
-mailjet31 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]),
-                   version="v3.1")
+mailjet31 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"]),
+    version="v3.1",
+)
 
 
 if __name__ == "__main__":

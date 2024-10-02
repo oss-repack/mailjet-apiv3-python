@@ -4,12 +4,14 @@ import os
 from mailjet_rest import Client
 
 
-mailjet30 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]))
+mailjet30 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"])
+)
 
-mailjet31 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]),
-                   version="v3.1")
+mailjet31 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"]),
+    version="v3.1",
+)
 
 
 def create_your_segment():
@@ -17,7 +19,7 @@ def create_your_segment():
     data = {
         "Description": "Will send only to contacts under 35 years of age.",
         "Expression": "(age<35)",
-        "Name": "Customers under 35"
+        "Name": "Customers under 35",
     }
     return mailjet30.contactfilter.create(data=data)
 
@@ -31,7 +33,7 @@ def create_a_campaign_with_a_segmentation_filter():
         "SenderEmail": "Mister@mailjet.com",
         "Subject": "Greetings from Mailjet",
         "ContactsListID": "$ID_CONTACTLIST",
-        "SegmentationID": "$ID_CONTACT_FILTER"
+        "SegmentationID": "$ID_CONTACT_FILTER",
     }
     return mailjet30.newsletter.create(data=data)
 
