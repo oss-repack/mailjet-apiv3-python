@@ -75,6 +75,7 @@ ignore = [
     'N806',
     # TODO: PLE0604 Invalid object in `__all__`, must contain only strings
     'PLE0604',
+    "Q003",   # Checks for avoidable escaped quotes ("\"" -> '"')
     # RET504 Unnecessary assignment to `response` before `return` statement
     'RET504',
     'RUF012',

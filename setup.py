@@ -2,6 +2,7 @@
 # coding=utf-8
 
 import os
+from pathlib import Path
 
 from setuptools import find_packages
 from setuptools import setup
@@ -9,9 +10,6 @@ from setuptools import setup
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 PACKAGE_NAME = "mailjet_rest"
-
-with open("README.md", "r") as fh:
-    long_description = fh.read()
 
 # Dynamically calculate the version based on mailjet_rest.VERSION.
 version = "latest"
@@ -26,7 +24,7 @@ setup(
     download_url="https://github.com/mailjet/mailjet-apiv3-python/releases/" + version,
     url="https://github.com/mailjet/mailjet-apiv3-python",
     description=("Mailjet V3 API wrapper"),
-    long_description=long_description,
+    long_description=Path("README.md").read_text(),
     long_description_content_type="text/markdown",
     classifiers=["Development Status :: 4 - Beta",
                  "Environment :: Console",
