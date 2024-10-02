@@ -147,7 +147,7 @@ class Client:
         # identify the resource
         fname = split[0]
         action = None
-        if (len(split) > 1):
+        if len(split) > 1:
             # identify the sub resource (action)
             action = split[1]
             if action == "csvdata":
