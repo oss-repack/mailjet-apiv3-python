@@ -38,8 +38,7 @@ def create_a_template_detailcontent():
         "Headers": "",
         "Html-part": "<h3>Dear passenger, welcome to Mailjet!</h3><br />May the delivery force be with you!",
         "MJMLContent": "",
-        "Text-part": "Dear passenger, welcome to Mailjet! May the delivery force be with you!"
-    }
+        "Text-part": "Dear passenger, welcome to Mailjet! May the delivery force be with you!"}
     return mailjet30.template_detailcontent.create(id=_id, data=data)
 
 

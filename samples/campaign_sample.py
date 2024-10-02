@@ -32,8 +32,7 @@ def by_adding_custom_content():
         "Headers": "object",
         "Html-part": "<h3>Dear passenger, welcome to Mailjet!</h3><br />May the delivery force be with you!",
         "MJMLContent": "",
-        "Text-part": "Dear passenger, welcome to Mailjet! May the delivery force be with you!"
-    }
+        "Text-part": "Dear passenger, welcome to Mailjet! May the delivery force be with you!"}
     return mailjet30.campaigndraft_detailcontent.create(id=_id, data=data)
 
 
@@ -73,24 +72,18 @@ def api_call_requirements():
             {
                 "From": {
                     "Email": "pilot@mailjet.com",
-                    "Name": "Mailjet Pilot"
-                },
+                    "Name": "Mailjet Pilot"},
                 "To": [
                     {
                         "Email": "passenger1@mailjet.com",
-                        "Name": "passenger 1"
-                    }
-                ],
+                        "Name": "passenger 1"}],
                 "Subject": "Your email flight plan!",
                 "TextPart": "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!",
                 "HTMLPart": "<h3>Dear passenger 1, welcome to <a "
-                            "href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with "
-                            "you!",
+                "href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with "
+                "you!",
                 "CustomCampaign": "SendAPI_campaign",
-                "DeduplicateCampaign": True
-            }
-        ]
-    }
+                "DeduplicateCampaign": True}]}
     return mailjet31.send.create(data=data)
 
 
