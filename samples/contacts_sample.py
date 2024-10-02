@@ -171,7 +171,7 @@ def upload_the_csv():
                 /$ID_CONTACTLIST/CSVData/text:plain"""
     return mailjet30.contactslist_csvdata.create(
         id="$ID_CONTACTLIST",
-        data=Path("./data.csv").read_text(),
+        data=Path("./data.csv", encoding="utf-8").read_text(),
     )
 
 
