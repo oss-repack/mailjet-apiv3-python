@@ -150,7 +150,7 @@ def build_url(url, method, action=None, resource_id=None, action_id=None):
         if action_id:
             url += f"/{action_id}"
     if resource_id:
-        url += f"/{str(resource_id)}"
+        url += f"/{resource_id}"
     return url
 
 
