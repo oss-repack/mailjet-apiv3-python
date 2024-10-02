@@ -1,5 +1,6 @@
 import json
 import os
+from pathlib import Path
 
 from mailjet_rest import Client
 
@@ -168,10 +169,9 @@ def manage_multiple_contacts_across_multiple_lists():
 def upload_the_csv():
     """POST https://api.mailjet.com/v3/DATA/contactslist
                 /$ID_CONTACTLIST/CSVData/text:plain"""
-    f = open("./data.csv")
     return mailjet30.contactslist_csvdata.create(
         id="$ID_CONTACTLIST",
-        data=f.read(),
+        data=Path("./data.csv").read_text(),
     )
 
 
