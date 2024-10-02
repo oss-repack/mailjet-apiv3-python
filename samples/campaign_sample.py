@@ -67,6 +67,7 @@ def send_the_campaign_right_away():
 
 def api_call_requirements():
     """POST https://api.mailjet.com/v3.1/send"""
+    # fmt: off
     data = {
         "Messages": [
             {
@@ -84,6 +85,7 @@ def api_call_requirements():
                 "you!",
                 "CustomCampaign": "SendAPI_campaign",
                 "DeduplicateCampaign": True}]}
+    # fmt: on
     return mailjet31.send.create(data=data)
 
 
