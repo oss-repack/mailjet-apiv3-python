@@ -88,8 +88,8 @@ class Client:
 
     def __init__(self, auth=None, **kwargs):
         self.auth = auth
-        version = kwargs.get("version", None)
-        api_url = kwargs.get("api_url", None)
+        version = kwargs.get("version")
+        api_url = kwargs.get("api_url")
         self.config = Config(version=version, api_url=api_url)
 
     def __getattr__(self, name):
