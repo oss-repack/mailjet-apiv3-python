@@ -16,6 +16,7 @@ def prepare_url(key):
     char_elem = key.group(0)
     if char_elem.isupper():
         return "-" + char_elem.lower()
+    return ''
 
 
 class Config(object):
