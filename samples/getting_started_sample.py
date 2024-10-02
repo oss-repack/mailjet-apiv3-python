@@ -14,6 +14,7 @@ mailjet31 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
 
 def send_messages():
     """POST https://api.mailjet.com/v3.1/send"""
+    # fmt: off; pylint; noqa
     data = {
         "Messages": [
             {
@@ -37,6 +38,7 @@ def send_messages():
         ],
         "SandboxMode": True,  # Remove to send real message.
     }
+    # fmt: on; pylint; noqa
     return mailjet31.send.create(data=data)
 
 

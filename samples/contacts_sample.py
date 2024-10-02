@@ -189,6 +189,7 @@ def import_csv_content_to_a_list():
 
 def using_csv_with_atetime_contact_data():
     """POST https://api.mailjet.com/v3/REST/csvimport"""
+    # fmt: off
     data = {
         "ContactsListID": "$ID_CONTACTLIST",
         "DataID": "$ID_DATA",
@@ -197,6 +198,7 @@ def using_csv_with_atetime_contact_data():
                          "\"TimezoneOffset\": 2,\"FieldNames\": "
                          "[\"email\", \"birthday\"]} "
     }
+    # fmt: on
     return mailjet30.csvimport.create(data=data)
 
 

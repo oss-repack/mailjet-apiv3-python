@@ -1,3 +1,16 @@
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+skip-string-normalization = false
+skip-magic-trailing-comma = false
+extend-exclude = '''
+/(
+  | docs
+  | setup.py
+  | venv
+)/
+'''
+
 [tool.autopep8]
 max_line_length = 88
 ignore = ""  # or ["E501", "W6"]
@@ -50,7 +63,7 @@ target-version = "py311"
 # Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default, ('UP') is pyupgrade.
 # "ERA" - Found commented-out code
 # see https://docs.astral.sh/ruff/rules/#rules
-select = ["A", "ARG", "B", "C4", "DOC", "DTZ", "E", "EM", "ERA", "EXE", "F", "FA", "FLY", "FURB", "G", "ICN", "INP", "INT", "ISC", "LOG", "N", "PD", "PERF", "PIE", "PLC", "PLE", "PLR", "PLW", "PT", "PTH", "PYI", "Q", "RET", "RSE", "RUF", "S", "SIM", "T10", "TID", "TRY", "UP", "W"]
+select = ["A", "ARG", "B", "C4", "DOC", "DTZ", "E", "EM", "ERA", "EXE", "F", "FA", "FLY", "FURB", "G", "ICN", "INP", "INT", "LOG", "N", "PD", "PERF", "PIE", "PLC", "PLE", "PLR", "PLW", "PT", "PTH", "PYI", "Q", "RET", "RSE", "RUF", "S", "SIM", "T10", "TID", "TRY", "UP", "W"]
 
 #extend-select = ["W", "N", "UP", "B", "A", "C4", "PT", "SIM", "PD", "PLE", "RUF"]
 # Never enforce `E501` (line length violations).
