@@ -146,11 +146,11 @@ def build_headers(resource, action=None, extra_headers=None):
 
 def build_url(url, method, action=None, resource_id=None, action_id=None):
     if action:
-        url += "/%s" % action
+        url += f"/{action}"
         if action_id:
-            url += "/{}".format(action_id)
+            url += f"/{action_id}"
     if resource_id:
-        url += "/%s" % str(resource_id)
+        url += f"/{str(resource_id)}"
     return url
 
 
