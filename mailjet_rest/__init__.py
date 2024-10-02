@@ -1,4 +1,3 @@
-# coding=utf-8
 from mailjet_rest.client import Client
 from mailjet_rest.utils.version import get_version
 
