@@ -38,8 +38,10 @@ class TestSuite(unittest.TestCase):
         if get_contact["Count"] != 0:
             contact_id = get_contact["Data"][0]["ID"]
         else:
-            contact_random_email = "".join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(10)) + "@mailjet.com"
-            post_contact = self.client.contact.create(data={"Email": contact_random_email})
+            contact_random_email = "".join(secrets.choice(
+                string.ascii_uppercase + string.digits) for _ in range(10)) + "@mailjet.com"
+            post_contact = self.client.contact.create(
+                data={"Email": contact_random_email})
             self.assertTrue(post_contact.status_code == 201)
             contact_id = post_contact.json()["Data"][0]["ID"]
 
@@ -47,8 +49,10 @@ class TestSuite(unittest.TestCase):
         if get_contact_list["Count"] != 0:
             list_id = get_contact_list["Data"][0]["ID"]
         else:
-            contact_list_random_name = "".join(secrets.choice(string.ascii_uppercase + string.digits) for _ in range(10)) + "@mailjet.com"
-            post_contact_list = self.client.contactslist.create(data={"Name": contact_list_random_name})
+            contact_list_random_name = "".join(secrets.choice(
+                string.ascii_uppercase + string.digits) for _ in range(10)) + "@mailjet.com"
+            post_contact_list = self.client.contactslist.create(
+                data={"Name": contact_list_random_name})
             self.assertTrue(post_contact_list.status_code == 201)
             list_id = post_contact_list.json()["Data"][0]["ID"]
 
@@ -60,7 +64,8 @@ class TestSuite(unittest.TestCase):
                 }
             ]
         }
-        result_add_list = self.client.contact_managecontactslists.create(id=contact_id, data=data)
+        result_add_list = self.client.contact_managecontactslists.create(
+            id=contact_id, data=data)
         self.assertTrue(result_add_list.status_code == 201)
 
         result = self.client.contact_getcontactslists.get(contact_id).json()
@@ -68,8 +73,10 @@ class TestSuite(unittest.TestCase):
 
     def test_get_with_id_filter(self):
         result_contact = self.client.contact.get(filters={"limit": 1}).json()
-        result_contact_with_id = self.client.contact.get(filter={"Email": result_contact["Data"][0]["Email"]}).json()
-        self.assertTrue(result_contact_with_id["Data"][0]["Email"] == result_contact["Data"][0]["Email"])
+        result_contact_with_id = self.client.contact.get(
+            filter={"Email": result_contact["Data"][0]["Email"]}).json()
+        self.assertTrue(
+            result_contact_with_id["Data"][0]["Email"] == result_contact["Data"][0]["Email"])
 
     def test_post_with_no_param(self):
         result = self.client.sender.create(data={}).json()

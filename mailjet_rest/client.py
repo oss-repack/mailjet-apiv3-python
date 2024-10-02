@@ -56,7 +56,16 @@ class Endpoint:
         return self._doc
 
     def _get(self, filters=None, action_id=None, id=None, **kwargs):
-        return api_call(self._auth, "get", self._url, headers=self.headers, action=self.action, action_id=action_id, filters=filters, resource_id=id, **kwargs)
+        return api_call(
+            self._auth,
+            "get",
+            self._url,
+            headers=self.headers,
+            action=self.action,
+            action_id=action_id,
+            filters=filters,
+            resource_id=id,
+            **kwargs)
 
     def get_many(self, filters=None, action_id=None, **kwargs):
         return self._get(filters=filters, action_id=action_id, **kwargs)
@@ -64,24 +73,67 @@ class Endpoint:
     def get(self, id=None, filters=None, action_id=None, **kwargs):
         return self._get(id=id, filters=filters, action_id=action_id, **kwargs)
 
-    def create(self, data=None, filters=None, id=None, action_id=None, ensure_ascii=True, data_encoding="utf-8", **kwargs):
+    def create(
+            self,
+            data=None,
+            filters=None,
+            id=None,
+            action_id=None,
+            ensure_ascii=True,
+            data_encoding="utf-8",
+            **kwargs):
         if self.headers["Content-type"] == "application/json":
             if ensure_ascii:
                 data = json.dumps(data)
             else:
                 data = json.dumps(data, ensure_ascii=False).encode(data_encoding)
-        return api_call(self._auth, "post", self._url, headers=self.headers, resource_id=id, data=data, action=self.action, action_id=action_id, filters=filters, **kwargs)
+        return api_call(
+            self._auth,
+            "post",
+            self._url,
+            headers=self.headers,
+            resource_id=id,
+            data=data,
+            action=self.action,
+            action_id=action_id,
+            filters=filters,
+            **kwargs)
 
-    def update(self, id, data, filters=None, action_id=None, ensure_ascii=True, data_encoding="utf-8", **kwargs):
+    def update(
+            self,
+            id,
+            data,
+            filters=None,
+            action_id=None,
+            ensure_ascii=True,
+            data_encoding="utf-8",
+            **kwargs):
         if self.headers["Content-type"] == "application/json":
             if ensure_ascii:
                 data = json.dumps(data)
             else:
                 data = json.dumps(data, ensure_ascii=False).encode(data_encoding)
-        return api_call(self._auth, "put", self._url, resource_id=id, headers=self.headers, data=data, action=self.action, action_id=action_id, filters=filters, **kwargs)
+        return api_call(
+            self._auth,
+            "put",
+            self._url,
+            resource_id=id,
+            headers=self.headers,
+            data=data,
+            action=self.action,
+            action_id=action_id,
+            filters=filters,
+            **kwargs)
 
     def delete(self, id, **kwargs):
-        return api_call(self._auth, "delete", self._url, action=self.action, headers=self.headers, resource_id=id, **kwargs)
+        return api_call(
+            self._auth,
+            "delete",
+            self._url,
+            action=self.action,
+            headers=self.headers,
+            resource_id=id,
+            **kwargs)
 
 
 class Client:
@@ -106,20 +158,34 @@ class Client:
             if action == "csverror":
                 action = "csverror/text:csv"
         url, headers = self.config[name]
-        return type(fname, (Endpoint,), {})(url=url, headers=headers, action=action, auth=self.auth)
+        return type(
+            fname, (Endpoint,), {})(
+            url=url, headers=headers, action=action, auth=self.auth)
 
 
 def api_call(auth, method, url, headers, data=None, filters=None, resource_id=None,
              timeout=60, debug=False, action=None, action_id=None, **kwargs):
-    url = build_url(url, method=method, action=action, resource_id=resource_id, action_id=action_id)
+    url = build_url(
+        url,
+        method=method,
+        action=action,
+        resource_id=resource_id,
+        action_id=action_id)
     req_method = getattr(requests, method)
 
     try:
         filters_str = None
         if filters:
             filters_str = "&".join("%s=%s" % (k, v) for k, v in filters.items())
-        response = req_method(url, data=data, params=filters_str, headers=headers, auth=auth,
-                              timeout=timeout, verify=True, stream=False)
+        response = req_method(
+            url,
+            data=data,
+            params=filters_str,
+            headers=headers,
+            auth=auth,
+            timeout=timeout,
+            verify=True,
+            stream=False)
 
     except requests.exceptions.Timeout as err:
         raise TimeoutError from err
