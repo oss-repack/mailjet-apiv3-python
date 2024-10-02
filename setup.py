@@ -5,7 +5,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-HERE = Path(os.path.dirname(__file__)).resolve()
+HERE = Path(Path(__file__).parent).resolve()
 PACKAGE_NAME = "mailjet_rest"
 
 # Dynamically calculate the version based on mailjet_rest.VERSION.
