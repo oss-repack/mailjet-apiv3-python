@@ -52,9 +52,6 @@ class Endpoint:
     def __init__(self, url, headers, auth, action=None):
         self._url, self.headers, self._auth, self.action = url, headers, auth, action
 
-    def __doc__(self):
-        return self._doc
-
     def _get(self, filters=None, action_id=None, id=None, **kwargs):
         return api_call(
             self._auth,
