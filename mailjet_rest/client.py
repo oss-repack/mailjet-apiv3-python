@@ -43,7 +43,7 @@ class Config:
             headers["Content-type"] = "text/csv"
         elif key.lower() != "send" and self.version != "v4":
             url = urljoin(url, "REST/")
-        url = url + key.split("_")[0].lower()
+        url += key.split("_")[0].lower()
         return url, headers
 
 
@@ -95,11 +95,11 @@ class Client:
     def __getattr__(self, name):
         name = re.sub(r"[A-Z]", prepare_url, name)
         split = name.split("_")
-        #identify the resource
+        # identify the resource
         fname = split[0]
         action = None
         if (len(split) > 1):
-            #identify the sub resource (action)
+            # identify the sub resource (action)
             action = split[1]
             if action == "csvdata":
                 action = "csvdata/text:plain"
