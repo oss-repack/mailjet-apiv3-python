@@ -21,7 +21,7 @@ setup(
     download_url="https://github.com/mailjet/mailjet-apiv3-python/releases/" + version,
     url="https://github.com/mailjet/mailjet-apiv3-python",
     description=("Mailjet V3 API wrapper"),
-    long_description=Path("README.md", encoding="utf-8").read_text(),
+    long_description=Path("README.md").read_text(encoding="utf-8"),
     long_description_content_type="text/markdown",
     classifiers=["Development Status :: 4 - Beta",
                  "Environment :: Console",
