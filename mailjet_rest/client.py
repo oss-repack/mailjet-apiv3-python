@@ -16,10 +16,10 @@ def prepare_url(key):
     char_elem = key.group(0)
     if char_elem.isupper():
         return "-" + char_elem.lower()
-    return ''
+    return ""
 
 
-class Config(object):
+class Config:
     DEFAULT_API_URL = "https://api.mailjet.com/"
     API_REF = "http://dev.mailjet.com/email-api/v3/"
     version = "v3"
@@ -47,7 +47,7 @@ class Config(object):
         return url, headers
 
 
-class Endpoint(object):
+class Endpoint:
 
     def __init__(self, url, headers, auth, action=None):
         self._url, self.headers, self._auth, self.action = url, headers, auth, action
@@ -84,7 +84,7 @@ class Endpoint(object):
         return api_call(self._auth, "delete", self._url, action=self.action, headers=self.headers, resource_id=id, **kwargs)
 
 
-class Client(object):
+class Client:
 
     def __init__(self, auth=None, **kwargs):
         self.auth = auth
