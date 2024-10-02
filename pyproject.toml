@@ -81,6 +81,7 @@ ignore = [
     'PLE0604',
     'PLR2004',  # PLR2004 Magic value used in comparison, consider replacing `XXX` with a constant variable
     'PLR0913',  # PLR0913 Too many arguments in function definition (6 > 5)
+    'PLR0917',  # PLR0917 Too many positional arguments
     "Q003",   # Checks for avoidable escaped quotes ("\"" -> '"')
     # RET504 Unnecessary assignment to `response` before `return` statement
     'RET504',
