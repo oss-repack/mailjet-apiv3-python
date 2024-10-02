@@ -75,6 +75,8 @@ ignore = [
     'N806',
     # TODO: PLE0604 Invalid object in `__all__`, must contain only strings
     'PLE0604',
+    # RET504 Unnecessary assignment to `response` before `return` statement
+    'RET504',
     'RUF012',
     # TODO: PT009 Use a regular `assert` instead of unittest-style `assertTrue`
     'PT009',
