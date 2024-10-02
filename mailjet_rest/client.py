@@ -158,13 +158,13 @@ def parse_response(response, debug=False):
     data = response.json()
 
     if debug:
-        logging.debug("REQUEST: %s" % response.request.url)
-        logging.debug("REQUEST_HEADERS: %s" % response.request.headers)
-        logging.debug("REQUEST_CONTENT: %s" % response.request.body)
+        logging.debug("REQUEST: %s", response.request.url)
+        logging.debug("REQUEST_HEADERS: %s", response.request.headers)
+        logging.debug("REQUEST_CONTENT: %s", response.request.body)
 
-        logging.debug("RESPONSE: %s" % response.content)
-        logging.debug("RESP_HEADERS: %s" % response.headers)
-        logging.debug("RESP_CODE: %s" % response.status_code)
+        logging.debug("RESPONSE: %s", response.content)
+        logging.debug("RESP_HEADERS: %s", response.headers)
+        logging.debug("RESP_CODE: %s", response.status_code)
 
     return data
 
