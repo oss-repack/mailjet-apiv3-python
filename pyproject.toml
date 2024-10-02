@@ -57,20 +57,12 @@ select = ["A", "ARG", "B", "C4", "DOC", "DTZ", "E", "EM", "ERA", "EXE", "F", "FA
 ignore = [
     # TODO: Fix unused function argument: `debug`, `kwargs`, and `method` in class Client
     'ARG001',  #  ARG001 Unused function argument: `debug`, `kwargs`, and `method` in class Client
-
+    # TODO: Fix A001 Variable `TimeoutError` is shadowing a Python builtin
+    'A001' ,
+    # TODO: Fix A002 Argument `id` is shadowing a Python builtin
+    'A002',
     # pycodestyle (E, W)
     'E501',
-    # Pyflakes (`F`)
-    "F401",
-    'E722',
-    'E741',
-    'F405',
-    'F811',
-    'F841',
-    'A001' ,
-    'A002',
-    'A003',
-    'B008',
     'INP001',  # INP001 File `samples/campaign_sample.py` is part of an implicit namespace package. Add an `__init__.py`.
     'PD901',
     'PD015',
