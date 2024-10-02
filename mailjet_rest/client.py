@@ -120,7 +120,6 @@ def api_call(auth, method, url, headers, data=None, filters=None, resource_id=No
             filters_str = "&".join("%s=%s" % (k, v) for k, v in filters.items())
         response = req_method(url, data=data, params=filters_str, headers=headers, auth=auth,
                               timeout=timeout, verify=True, stream=False)
-        return response
 
     except requests.exceptions.Timeout as err:
         raise TimeoutError from err
@@ -128,6 +127,8 @@ def api_call(auth, method, url, headers, data=None, filters=None, resource_id=No
         raise ApiError from err
     except Exception:
         raise
+    else:
+        return response
 
 
 def build_headers(resource, action=None, extra_headers=None):

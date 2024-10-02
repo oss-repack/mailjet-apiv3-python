@@ -50,7 +50,7 @@ target-version = "py311"
 # Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default, ('UP') is pyupgrade.
 # "ERA" - Found commented-out code
 # see https://docs.astral.sh/ruff/rules/#rules
-select = ["A", "B", "C4", "E", "EM", "ERA", "EXE", "F", "FA", "FURB", "G", "ICN", "LOG", "N", "PD", "PERF", "PIE", "PLE", "PLW", "PT", "PTH", "PYI", "Q", "RET", "RUF", "S", "SIM", "UP", "W"]
+select = ["A", "ARG", "B", "C4", "DOC", "DTZ", "E", "EM", "ERA", "EXE", "F", "FA", "FLY", "FURB", "G", "ICN", "INP", "INT", "ISC", "LOG", "N", "PD", "PERF", "PIE", "PLC", "PLE", "PLR", "PLW", "PT", "PTH", "PYI", "Q", "RET", "RSE", "RUF", "S", "SIM", "T10", "TID", "TRY", "UP", "W"]
 
 #extend-select = ["W", "N", "UP", "B", "A", "C4", "PT", "SIM", "PD", "PLE", "RUF"]
 # Never enforce `E501` (line length violations).
@@ -75,6 +75,7 @@ ignore = [
     'N806',
     # TODO: PLE0604 Invalid object in `__all__`, must contain only strings
     'PLE0604',
+    'PLR0913',  # PLR0913 Too many arguments in function definition (6 > 5)
     "Q003",   # Checks for avoidable escaped quotes ("\"" -> '"')
     # RET504 Unnecessary assignment to `response` before `return` statement
     'RET504',
