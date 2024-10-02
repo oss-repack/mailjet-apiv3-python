@@ -4,12 +4,14 @@ import os
 from mailjet_rest import Client
 
 
-mailjet30 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]))
+mailjet30 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"])
+)
 
-mailjet31 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]),
-                   version="v3.1")
+mailjet31 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"]),
+    version="v3.1",
+)
 
 
 def create_a_campaign_draft():
@@ -20,7 +22,7 @@ def create_a_campaign_draft():
         "SenderEmail": "Mister@mailjet.com",
         "Subject": "Greetings from Mailjet",
         "ContactsListID": "$ID_CONTACTSLIST",
-        "Title": "Friday newsletter"
+        "Title": "Friday newsletter",
     }
     return mailjet30.campaigndraft.create(data=data)
 
@@ -32,30 +34,22 @@ def by_adding_custom_content():
         "Headers": "object",
         "Html-part": "<h3>Dear passenger, welcome to Mailjet!</h3><br />May the delivery force be with you!",
         "MJMLContent": "",
-        "Text-part": "Dear passenger, welcome to Mailjet! May the delivery force be with you!"}
+        "Text-part": "Dear passenger, welcome to Mailjet! May the delivery force be with you!",
+    }
     return mailjet30.campaigndraft_detailcontent.create(id=_id, data=data)
 
 
 def test_your_campaign():
     """POST https://api.mailjet.com/v3/REST/campaigndraft/$draft_ID/test"""
     _id = "$draft_ID"
-    data = {
-        "Recipients": [
-            {
-                "Email": "passenger@mailjet.com",
-                "Name": "Passenger 1"
-            }
-        ]
-    }
+    data = {"Recipients": [{"Email": "passenger@mailjet.com", "Name": "Passenger 1"}]}
     return mailjet30.campaigndraft_test.create(id=_id, data=data)
 
 
 def schedule_the_sending():
     """POST https://api.mailjet.com/v3/REST/campaigndraft/$draft_ID/schedule"""
     _id = "$draft_ID"
-    data = {
-        "Date": "2018-01-01T00:00:00"
-    }
+    data = {"Date": "2018-01-01T00:00:00"}
     return mailjet30.campaigndraft_schedule.create(id=_id, data=data)
 
 

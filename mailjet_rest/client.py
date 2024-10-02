@@ -48,7 +48,6 @@ class Config:
 
 
 class Endpoint:
-
     def __init__(self, url, headers, auth, action=None):
         self._url, self.headers, self._auth, self.action = url, headers, auth, action
 
@@ -62,7 +61,8 @@ class Endpoint:
             action_id=action_id,
             filters=filters,
             resource_id=id,
-            **kwargs)
+            **kwargs,
+        )
 
     def get_many(self, filters=None, action_id=None, **kwargs):
         return self._get(filters=filters, action_id=action_id, **kwargs)
@@ -71,14 +71,15 @@ class Endpoint:
         return self._get(id=id, filters=filters, action_id=action_id, **kwargs)
 
     def create(
-            self,
-            data=None,
-            filters=None,
-            id=None,
-            action_id=None,
-            ensure_ascii=True,
-            data_encoding="utf-8",
-            **kwargs):
+        self,
+        data=None,
+        filters=None,
+        id=None,
+        action_id=None,
+        ensure_ascii=True,
+        data_encoding="utf-8",
+        **kwargs,
+    ):
         if self.headers["Content-type"] == "application/json":
             if ensure_ascii:
                 data = json.dumps(data)
@@ -94,17 +95,19 @@ class Endpoint:
             action=self.action,
             action_id=action_id,
             filters=filters,
-            **kwargs)
+            **kwargs,
+        )
 
     def update(
-            self,
-            id,
-            data,
-            filters=None,
-            action_id=None,
-            ensure_ascii=True,
-            data_encoding="utf-8",
-            **kwargs):
+        self,
+        id,
+        data,
+        filters=None,
+        action_id=None,
+        ensure_ascii=True,
+        data_encoding="utf-8",
+        **kwargs,
+    ):
         if self.headers["Content-type"] == "application/json":
             if ensure_ascii:
                 data = json.dumps(data)
@@ -120,7 +123,8 @@ class Endpoint:
             action=self.action,
             action_id=action_id,
             filters=filters,
-            **kwargs)
+            **kwargs,
+        )
 
     def delete(self, id, **kwargs):
         return api_call(
@@ -130,11 +134,11 @@ class Endpoint:
             action=self.action,
             headers=self.headers,
             resource_id=id,
-            **kwargs)
+            **kwargs,
+        )
 
 
 class Client:
-
     def __init__(self, auth=None, **kwargs):
         self.auth = auth
         version = kwargs.get("version")
@@ -155,19 +159,28 @@ class Client:
             if action == "csverror":
                 action = "csverror/text:csv"
         url, headers = self.config[name]
-        return type(
-            fname, (Endpoint,), {})(
-            url=url, headers=headers, action=action, auth=self.auth)
+        return type(fname, (Endpoint,), {})(
+            url=url, headers=headers, action=action, auth=self.auth
+        )
 
 
-def api_call(auth, method, url, headers, data=None, filters=None, resource_id=None,
-             timeout=60, debug=False, action=None, action_id=None, **kwargs):
+def api_call(
+    auth,
+    method,
+    url,
+    headers,
+    data=None,
+    filters=None,
+    resource_id=None,
+    timeout=60,
+    debug=False,
+    action=None,
+    action_id=None,
+    **kwargs,
+):
     url = build_url(
-        url,
-        method=method,
-        action=action,
-        resource_id=resource_id,
-        action_id=action_id)
+        url, method=method, action=action, resource_id=resource_id, action_id=action_id
+    )
     req_method = getattr(requests, method)
 
     try:
@@ -182,7 +195,8 @@ def api_call(auth, method, url, headers, data=None, filters=None, resource_id=No
             auth=auth,
             timeout=timeout,
             verify=True,
-            stream=False)
+            stream=False,
+        )
 
     except requests.exceptions.Timeout as err:
         raise TimeoutError from err
