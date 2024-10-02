@@ -122,10 +122,10 @@ def api_call(auth, method, url, headers, data=None, filters=None, resource_id=No
                               timeout=timeout, verify=True, stream=False)
         return response
 
-    except requests.exceptions.Timeout:
-        raise TimeoutError
-    except requests.RequestException as e:
-        raise ApiError(e)
+    except requests.exceptions.Timeout as err:
+        raise TimeoutError from err
+    except requests.RequestException as err:
+        raise ApiError from err
     except Exception:
         raise
 
