@@ -1,8 +1,9 @@
-import unittest
-from mailjet_rest import Client
 import os
 import random
 import string
+import unittest
+
+from mailjet_rest import Client
 
 
 class TestSuite(unittest.TestCase):
