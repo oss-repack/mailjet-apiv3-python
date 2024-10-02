@@ -7,7 +7,9 @@ import re
 
 import requests
 from requests.compat import urljoin
+
 from .utils.version import get_version
+
 
 requests.packages.urllib3.disable_warnings()
 
@@ -126,7 +128,7 @@ def api_call(auth, method, url, headers, data=None, filters=None, resource_id=No
         raise TimeoutError
     except requests.RequestException as e:
         raise ApiError(e)
-    except Exception as e:
+    except Exception:
         raise
 
 

@@ -2,7 +2,10 @@
 # coding=utf-8
 
 import os
-from setuptools import find_packages, setup
+
+from setuptools import find_packages
+from setuptools import setup
+
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 PACKAGE_NAME = "mailjet_rest"
