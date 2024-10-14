@@ -198,10 +198,10 @@ def api_call(
             stream=False,
         )
 
-    except requests.exceptions.Timeout as err:
-        raise TimeoutError from err
-    except requests.RequestException as err:
-        raise ApiError from err
+    except requests.exceptions.Timeout:
+        raise TimeoutError
+    except requests.RequestException as e:
+        raise ApiError(e)
     except Exception:
         raise
     else:
