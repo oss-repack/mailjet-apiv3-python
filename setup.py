@@ -15,7 +15,7 @@ setup(
     author_email="starenka0@gmail.com",
     maintainer="Mailjet",
     maintainer_email="api@mailjet.com",
-    version="latest",
+    version="1.3.3",
     download_url="https://github.com/mailjet/mailjet-apiv3-python/releases/" + version,
     url="https://github.com/mailjet/mailjet-apiv3-python",
     description=("Mailjet V3 API wrapper"),
