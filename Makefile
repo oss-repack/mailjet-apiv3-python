@@ -13,7 +13,7 @@ PYTHON3 := "$(CONDA_PREFIX)/bin/python3"
 
 CONDA_ENV_NAME ?= mailjet
 SRC_DIR = mailjet_rest
-TEST_DIR = tests/
+TEST_DIR = test.py
 SCRIPTS_DIR = scripts/
 
 define BROWSER_PYSCRIPT
