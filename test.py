@@ -1,5 +1,5 @@
 import os
-import secrets
+import random
 import string
 import unittest
 
@@ -36,7 +36,7 @@ class TestSuite(unittest.TestCase):
         else:
             contact_random_email = (
                 "".join(
-                    secrets.choice(string.ascii_uppercase + string.digits)
+                    random.choice(string.ascii_uppercase + string.digits)
                     for _ in range(10)
                 )
                 + "@mailjet.com"
@@ -53,7 +53,7 @@ class TestSuite(unittest.TestCase):
         else:
             contact_list_random_name = (
                 "".join(
-                    secrets.choice(string.ascii_uppercase + string.digits)
+                    random.choice(string.ascii_uppercase + string.digits)
                     for _ in range(10)
                 )
                 + "@mailjet.com"
