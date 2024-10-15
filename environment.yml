@@ -1,0 +1,25 @@
+name: mailjet
+channels:
+  - defaults
+dependencies:
+  # Python
+  - python=3.11
+  # build & host deps
+  - pip
+  # runtime deps
+  - requests>=2.4.3
+  # tests
+  - pytest
+  - pytest-cov
+  # linters & formatters
+  - pylint
+  - pycodestyle
+  - pydocstyle
+  - flake8
+  - autoflake8
+  - ruff
+  - pyupgrade
+  - mypy
+  - types-requests
+  # other
+  - pre-commit
