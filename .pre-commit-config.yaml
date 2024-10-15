@@ -101,10 +101,10 @@ repos:
 #        name: "yapf"
 #        additional_dependencies: [toml]
 
-  - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.383
-    hooks:
-    - id: pyright
+#  - repo: https://github.com/RobertCraigie/pyright-python
+#    rev: v1.1.383
+#    hooks:
+#    - id: pyright
 
 #  - repo: https://github.com/adrienverge/yamllint.git
 #    rev: v1.29.0

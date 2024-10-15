@@ -74,6 +74,7 @@ ignore = [
     'A001' ,
     # TODO: Fix A002 Argument `id` is shadowing a Python builtin
     'A002',
+    'B904',  # Within an `except` clause, raise exceptions with `raise ... from err` or `raise ... from None`
     # pycodestyle (E, W)
     'E501',
     'INP001',  # INP001 File `samples/campaign_sample.py` is part of an implicit namespace package. Add an `__init__.py`.
@@ -93,6 +94,7 @@ ignore = [
     'RUF012',
     # TODO: PT009 Use a regular `assert` instead of unittest-style `assertTrue`
     'PT009',
+    'S311',  # Standard pseudo-random generators are not suitable for cryptographic purposes
     # pyupgrade (UP): Skip for logging: UP031 Use format specifiers instead of percent format
     'UP031'
 ]
