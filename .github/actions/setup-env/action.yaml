@@ -2,22 +2,32 @@ name: Set up environment
 description: Set up a mailjet environment
 
 inputs:
+  channel:
+    default: 'defaults'
+    description: 'Channel to fetch latest conda from.'
+    required: false
   python-version:
     description: "Version of python to use in the conda environment."
     required: false
     default: "3.9"
+
 
 runs:
   using: "composite"
   steps:
     - uses: conda-incubator/setup-miniconda@v3
       with:
+        auto-update-conda: true
         python-version: ${{ inputs.python-version }}
         activate-environment: mailjet
         environment-file: environment.yaml
+
+    - name: Install latest conda
+      shell: bash -el {0}
+      run: |
+        conda update -n base -y -q -c "${{ inputs.channel }}" conda
+
     - name: Create Environment
       shell: bash
       run: |
-        source $CONDA/bin/activate
-        conda activate mailjet
-        pip install .
+        make dev
