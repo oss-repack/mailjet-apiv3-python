@@ -12,13 +12,16 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-        - uses: ./.github/actions/setup-env
+        - uses: conda-incubator/setup-miniconda@v3
           with:
-            python-version: "3.11"
+            python-version: '3.11'
+            channels: defaults
+            show-channel-urls: true
+            environment-file: environment.yaml
         # Executes `pre-commit` with the `make` directive to ensure all dependencies are found
         - run: |
-            source $CONDA/bin/activate
-            conda activate mailjet
+            pip install -e .
+            conda info
             make pre-commit
 
 #  # linux test suite
