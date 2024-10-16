@@ -29,11 +29,11 @@ jobs:
       steps:
         - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         - uses: ./.github/actions/setup-env
+          with:
+            python-version: ${{ matrix.python-version }}
           env:
             MJ_APIKEY_PUBLIC: '${{ secrets.MJ_APIKEY_PUBLIC }}'
             MJ_APIKEY_PRIVATE: '${{ secrets.MJ_APIKEY_PRIVATE }}'
-          with:
-            python-version: ${{ matrix.python-version }}
         - run: |
             source $CONDA/bin/activate
             conda activate mailjet
