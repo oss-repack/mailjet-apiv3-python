@@ -20,59 +20,11 @@ jobs:
             environment-file: environment.yaml
         # Executes `pre-commit` with the `make` directive to ensure all dependencies are found
         - run: |
-            pip install -e .
+            source $CONDA/bin/activate
+            conda activate mailjet
+            pip install .
             conda info
             make pre-commit
-
-#  # linux test suite
-#  linux:
-#      runs-on: ubuntu-latest
-#      name: Test (py${{ matrix.python-version }} on linux-64)
-#      strategy:
-#        fail-fast: false
-#        matrix:
-#          python-version: ["3.9", "3.12"]
-#      environment: mailjet
-#      env:
-#         MJ_APIKEY_PUBLIC: '${{ secrets.MJ_APIKEY_PUBLIC }}'
-#         MJ_APIKEY_PRIVATE: '${{ secrets.MJ_APIKEY_PRIVATE }}'
-#      steps:
-#        - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-#        - uses: ./.github/actions/setup-env
-#          with:
-#            python-version: ${{ matrix.python-version }}
-#
-#        - name: Run tests
-#          shell: bash -el {0}
-#          run: |
-#            conda info
-#            conda list
-#            make test
-#
-#
-#  macos:
-#      runs-on: macos-latest
-#      name: Test (py${{ matrix.python-version }} on osx-64)
-#      strategy:
-#        fail-fast: false
-#        matrix:
-#          python-version: ["3.9", "3.12"]
-#      environment: mailjet
-#      env:
-#         MJ_APIKEY_PUBLIC: '${{ secrets.MJ_APIKEY_PUBLIC }}'
-#         MJ_APIKEY_PRIVATE: '${{ secrets.MJ_APIKEY_PRIVATE }}'
-#      steps:
-#        - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-#        - uses: ./.github/actions/setup-env
-#          with:
-#            python-version: ${{ matrix.python-version }}
-#
-#        - name: Run tests
-#          shell: sh -l {0}
-#          run: |
-#            conda info
-#            conda list
-#            make test
 
   test:
     name: test py${{ matrix.python-version }} on ${{ matrix.os }}
