@@ -24,7 +24,7 @@ jobs:
   # linux test suite
   linux:
       runs-on: ubuntu-latest
-      name: Test on ${{ matrix.python-version }}
+      name: Test linux-64 on ${{ matrix.python-version }}
       strategy:
         fail-fast: false
         matrix:
@@ -46,7 +46,7 @@ jobs:
   # windows test suite
   windows:
     runs-on: windows-latest
-    name: Test on ${{ matrix.python-version }}
+    name: Test win-64 on ${{ matrix.python-version }}
     strategy:
       fail-fast: false
       matrix:
@@ -59,8 +59,10 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - uses: ./.github/actions/setup-env
         with:
+          use-only-tar-bz2: true  # IMPORTANT: This needs to be set for caching to work properly!
+          auto-update-conda: true
+          auto-activate-base: false
+          activate-environment: mailjet
           python-version: ${{ matrix.python-version }}
       - run: |
-          source $CONDA/bin/activate
-          conda activate mailjet
-            make test
+          make test
