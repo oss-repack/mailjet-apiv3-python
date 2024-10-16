@@ -24,7 +24,7 @@ jobs:
   # linux test suite
   test:
       runs-on: ${{ matrix.os }}
-      name: ${{ matrix.os }} on ${{ matrix.python-version }}
+      name: Test (py${{ matrix.python-version }} on ${{ matrix.os }})
       strategy:
         fail-fast: false
         matrix:
@@ -36,8 +36,9 @@ jobs:
          MJ_APIKEY_PRIVATE: '${{ secrets.MJ_APIKEY_PRIVATE }}'
       steps:
         - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-        - uses: ./.github/actions/setup-env
           with:
+            activate-environment: mailjet
+            environment-file: environment.yaml
             auto-update-conda: true
             miniconda-version: "latest"
             python-version: ${{ matrix.python-version }}
@@ -50,6 +51,4 @@ jobs:
 
         - name: Run tests
           run: |
-            source $CONDA/bin/activate
-            conda activate mailjet
             make test
