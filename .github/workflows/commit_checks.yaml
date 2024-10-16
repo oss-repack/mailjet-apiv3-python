@@ -7,38 +7,13 @@ on:
   pull_request:
 
 jobs:
-  pre-commit-simple:
+  pre-commit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - uses: pre-commit/action@v3.0.0
-
-  # NOTE: Tests also run via `pre-commit`
-  pre-commit:
-      runs-on: ubuntu-latest
-      defaults:
-        run:
-          shell: bash -el {0}
-      strategy:
-        fail-fast: false
-        matrix:
-          python-version: [ "3.12" ]
-      environment: mailjet
-      steps:
-        - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-        - uses: conda-incubator/setup-miniconda@v3
-          with:
-            python-version: ${{ matrix.python-version }}
-            channels: defaults
-            show-channel-urls: true
-            environment-file: environment.yaml
-        # Executes `pre-commit` with the `make` directive to ensure all dependencies are found
-        - run: |
-            pip install .
-            conda info
-            make pre-commit
+      - uses: pre-commit/action@v3.0.1
 
   test:
     name: test py${{ matrix.python-version }} on ${{ matrix.os }}
