@@ -1,3 +1,6 @@
+.PHONY: clean clean-env clean-test clean-pyc clean-build clean-other help dev test test-debug test-cov pre-commit lint format format-docs analyze docs
+.DEFAULT_GOAL := help
+
 # The `.ONESHELL` and setting `SHELL` allows us to run commands that require
 # `conda activate`
 .ONESHELL:
@@ -7,9 +10,6 @@ SHELL := /bin/bash
 CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate
 # Ensure that we are using the python interpreter provided by the conda environment.
 PYTHON3 := "$(CONDA_PREFIX)/bin/python3"
-
-.PHONY: clean clean-env clean-test clean-pyc clean-build clean-other help dev test test-debug test-cov pre-commit lint format format-docs analyze docs
-.DEFAULT_GOAL := help
 
 CONDA_ENV_NAME ?= mailjet
 SRC_DIR = mailjet_rest
@@ -38,7 +38,7 @@ export PRINT_HELP_PYSCRIPT
 
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
-clean: clean-cov clean-build clean-env clean-pyc clean-test clean-other ## remove all build, test, coverage and Python artifacts
+clean: clean-cov clean-build clean-env clean-pyc clean-test clean-temp clean-other ## remove all build, test, coverage and Python artifacts
 
 clean-cov:
 	rm -rf .coverage
@@ -69,19 +69,33 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
+clean-temp: ## remove temp artifacts
+	rm -fr temp/tmp.txt
+	rm -fr tmp.txt
+
 clean-other:
 	rm -fr *.prof
 	rm -fr profile.html profile.json
+	rm -fr wget-log
+	rm -fr logs/*.log
+	rm -fr *.txt
 
 help:
 	$(PYTHON3) -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
-install: clean	## install the package to the active Python's site-packages
-	pip install .
-
 environment:    ## handles environment creation
 	conda env create -f environment.yaml --name $(CONDA_ENV_NAME) --yes
 	conda run --name $(CONDA_ENV_NAME) pip install .
+
+install: clean	## install the package to the active Python's site-packages
+	pip install .
+
+release: dist ## package and upload a release
+	twine upload dist/*
+
+dist: clean ## builds source and wheel package
+	python -m build
+	ls -l dist
 
 dev: clean		## install the package's development version to a fresh environment
 	conda env create -f environment.yaml --name $(CONDA_ENV_NAME) --yes
@@ -101,12 +115,35 @@ test-cov:		## checks test coverage requirements
 	$(PYTHON3) -m pytest -n auto --cov-config=.coveragerc --cov=$(SRC_DIR) \
 		$(TEST_DIR) --cov-fail-under=80 --cov-report term-missing
 
-lint:			## runs the linter against the project
+tests-cov-fail:
+	@pytest --cov=$(SRC_DIR) --cov-report term-missing --cov-report=html --cov-fail-under=80
+
+coverage: ## check code coverage quickly with the default Python
+	coverage run --source $(SRC_DIR) -m pytest
+	coverage report -m
+	coverage html
+	$(BROWSER) htmlcov/index.html
+
+lint-black:
+	black --line-length=80 $(SRC_DIR) $(TEST_DIR)
+lint-isort:
+	isort --profile black --line-length=80 $(SRC_DIR) $(TEST_DIR)
+lint-flake8:
+	@flake8 $(SRC_DIR) $(TEST_DIR)
+lint-pylint:
 	pylint --rcfile=.pylintrc $(SRC_DIR) $(TEST_DIR)
+lint-refurb:
+	@refurb $(SRC_DIR)
+
+format-black:
+	@black --line-length=88 $(SRC_DIR) $(TEST_DIR) $(SCRIPTS_DIR)
+format-isort:
+	@isort --profile black --line-length=88 $(SRC_DIR) $(TEST_DIR) $(SCRIPTS_DIR)
+format: format-black format-isort
 
 format:			## runs the code auto-formatter
-	isort --profile black --line-length=120 $(SRC_DIR) $(TEST_DIR) $(SCRIPTS_DIR)
-	black --line-length=120 $(SRC_DIR) $(TEST_DIR) $(SCRIPTS_DIR)
+	isort
+	black
 
 format-docs:	## runs the docstring auto-formatter. Note this requires manually installing `docconvert` with `pip`
 	docconvert --in-place --config .docconvert.json $(SRC_DIR)
@@ -114,5 +151,5 @@ format-docs:	## runs the docstring auto-formatter. Note this requires manually i
 analyze:		## runs static analyzer on the project
 	mypy --config-file=.mypy.ini --cache-dir=/dev/null $(SRC_DIR) $(TEST_DIR) $(SCRIPTS_DIR)
 
-docs:
-	$(MAKE) -C docs html
+lint-mypy-report:
+	@mypy $(SRC_DIR) --html-report ./mypy_html
