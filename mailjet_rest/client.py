@@ -186,7 +186,7 @@ def api_call(
     try:
         filters_str = None
         if filters:
-            filters_str = "&".join("%s=%s" % (k, v) for k, v in filters.items())
+            filters_str = "&".join(f"{k}={v}" for k, v in filters.items())
         response = req_method(
             url,
             data=data,
