@@ -10,6 +10,7 @@ jobs:
   # NOTE: Tests also run via `pre-commit`
   pre-commit:
       runs-on: ubuntu-latest
+      environment: mailjet
       steps:
         - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         - uses: ./.github/actions/setup-env
