@@ -37,10 +37,13 @@ jobs:
         - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         - uses: ./.github/actions/setup-env
           with:
+            miniconda-version: "latest"
+            use-only-tar-bz2: true  # IMPORTANT: This needs to be set for caching to work properly!
+            auto-update-conda: false
+            auto-activate-base: false
+            activate-environment: mailjet
             python-version: ${{ matrix.python-version }}
         - run: |
-            source $CONDA/bin/activate
-            conda activate mailjet
             make test
 
   # windows test suite
@@ -59,8 +62,9 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - uses: ./.github/actions/setup-env
         with:
+          miniconda-version: "latest"
           use-only-tar-bz2: true  # IMPORTANT: This needs to be set for caching to work properly!
-          auto-update-conda: true
+          auto-update-conda: false
           auto-activate-base: false
           activate-environment: mailjet
           python-version: ${{ matrix.python-version }}
