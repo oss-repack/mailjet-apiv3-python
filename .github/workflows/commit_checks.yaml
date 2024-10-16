@@ -20,22 +20,22 @@ jobs:
             source $CONDA/bin/activate
             conda activate mailjet
             make pre-commit
-#  test:
-#      runs-on: ubuntu-latest
-#      name: Test on ${{ matrix.python-version }}
-#      strategy:
-#        matrix:
-#          python-version: ["3.9", "3.10", "3.11", "3.12"]
-#      environment: mailjet
-#      steps:
-#        - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-#        - uses: ./.github/actions/setup-env
-#          with:
-#            python-version: ${{ matrix.python-version }}
-#          env:
-#            MJ_APIKEY_PUBLIC: '${{ secrets.MJ_APIKEY_PUBLIC }}'
-#            MJ_APIKEY_PRIVATE: '${{ secrets.MJ_APIKEY_PRIVATE }}'
-#        - run: |
-#            source $CONDA/bin/activate
-#            conda activate mailjet
-#            make test
+  test:
+      runs-on: ubuntu-latest
+      name: Test on ${{ matrix.python-version }}
+      strategy:
+        matrix:
+          python-version: ["3.9", "3.10", "3.11", "3.12"]
+      environment: mailjet
+      env:
+         MJ_APIKEY_PUBLIC: '${{ secrets.MJ_APIKEY_PUBLIC }}'
+         MJ_APIKEY_PRIVATE: '${{ secrets.MJ_APIKEY_PRIVATE }}'
+      steps:
+        - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        - uses: ./.github/actions/setup-env
+          with:
+            python-version: ${{ matrix.python-version }}
+        - run: |
+            source $CONDA/bin/activate
+            conda activate mailjet
+            make test
