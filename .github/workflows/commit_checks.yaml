@@ -72,8 +72,11 @@ jobs:
             make test
 
   windows:
-    runs-on: windows-latest
     name: Test (py${{ matrix.python-version }} on win-64)
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash -el {0}
     strategy:
       fail-fast: false
       matrix:
@@ -84,11 +87,23 @@ jobs:
       MJ_APIKEY_PRIVATE: '${{ secrets.MJ_APIKEY_PRIVATE }}'
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-      - uses: ./.github/actions/setup-env
+      #- uses: ./.github/actions/setup-env
+#      with:
+#        python-version: ${{ matrix.python-version }}
+      - uses: conda-incubator/setup-miniconda@v3
         with:
           python-version: ${{ matrix.python-version }}
+          channels: defaults
+          show-channel-urls: true
+          environment-file: environment.yaml
 
-      - name: Run tests
-        shell: cmd /C CALL {0}
-        run: >-
+      - name: Source Scripts
+        run: |
+          pip install -e .
+          conda info
           pytest test.py
+
+#      - name: Run tests
+#        shell: cmd /C CALL {0}
+#        run: >-
+#          pytest test.py
