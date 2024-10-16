@@ -47,6 +47,7 @@ runs:
       if: runner.os == 'Windows'
       shell: cmd /C CALL {0}
       run: |
-        $CONDA\Scripts\activate.bat
+        dir $CONDA\Scripts\
+        $CONDA\Scripts\activate
         conda activate mailjet
         pip install .
