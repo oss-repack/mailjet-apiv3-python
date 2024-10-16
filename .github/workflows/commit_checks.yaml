@@ -10,6 +10,14 @@ jobs:
   # NOTE: Tests also run via `pre-commit`
   pre-commit:
       runs-on: ubuntu-latest
+      defaults:
+        run:
+          shell: bash -el {0}
+      strategy:
+        fail-fast: false
+        matrix:
+          python-version: [ "3.12" ]
+      environment: mailjet
       steps:
         - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         - uses: conda-incubator/setup-miniconda@v3
