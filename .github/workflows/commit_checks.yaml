@@ -91,5 +91,4 @@ jobs:
       - name: Run tests
         shell: cmd /C CALL {0}
         run: >-
-          conda info && conda list
           make test
