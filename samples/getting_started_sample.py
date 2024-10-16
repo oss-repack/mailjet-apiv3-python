@@ -4,39 +4,35 @@ import os
 from mailjet_rest import Client
 
 
-mailjet30 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]))
+mailjet30 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"])
+)
 
-mailjet31 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]),
-                   version="v3.1")
+mailjet31 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"]),
+    version="v3.1",
+)
 
 
 def send_messages():
     """POST https://api.mailjet.com/v3.1/send"""
+    # fmt: off; pylint; noqa
     data = {
         "Messages": [
             {
-                "From": {
-                    "Email": "pilot@mailjet.com",
-                    "Name": "Mailjet Pilot"
-                },
-                "To": [
-                    {
-                        "Email": "passenger1@mailjet.com",
-                        "Name": "passenger 1"
-                    }
-                ],
+                "From": {"Email": "pilot@mailjet.com", "Name": "Mailjet Pilot"},
+                "To": [{"Email": "passenger1@mailjet.com", "Name": "passenger 1"}],
                 "Subject": "Your email flight plan!",
                 "TextPart": "Dear passenger 1, welcome to Mailjet! May the "
-                            "delivery force be with you!",
-                "HTMLPart": "<h3>Dear passenger 1, welcome to <a href=\"https"
-                            "://www.mailjet.com/\">Mailjet</a>!<br />May the "
-                            "delivery force be with you!"
+                "delivery force be with you!",
+                "HTMLPart": '<h3>Dear passenger 1, welcome to <a href="https'
+                '://www.mailjet.com/">Mailjet</a>!<br />May the '
+                "delivery force be with you!",
             }
         ],
         "SandboxMode": True,  # Remove to send real message.
     }
+    # fmt: on; pylint; noqa
     return mailjet31.send.create(data=data)
 
 
@@ -62,7 +58,7 @@ def view_message_history():
 
 def retrieve_statistic():
     """GET https://api.mailjet.com/v3/REST/statcounters?CounterSource=APIKey
-                \\&CounterTiming=Message\\&CounterResolution=Lifetime
+    \\&CounterTiming=Message\\&CounterResolution=Lifetime
     """
     filters = {
         "CounterSource": "APIKey",
