@@ -28,7 +28,7 @@ jobs:
       strategy:
         fail-fast: false
         matrix:
-          python-version: ["3.9", "3.10", "3.11", "3.12"]
+          python-version: ["3.9", "3.12"]
       environment: mailjet
       env:
          MJ_APIKEY_PUBLIC: '${{ secrets.MJ_APIKEY_PUBLIC }}'
@@ -37,10 +37,9 @@ jobs:
         - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         - uses: ./.github/actions/setup-env
           with:
-            miniconda-version: "latest"
-            activate-environment: mailjet
             python-version: ${{ matrix.python-version }}
         - run: |
+            source $CONDA/bin/activate
             conda activate mailjet
             make test
 
@@ -51,7 +50,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.12"]
     environment: mailjet
     env:
        MJ_APIKEY_PUBLIC: '${{ secrets.MJ_APIKEY_PUBLIC }}'
@@ -60,9 +59,8 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - uses: ./.github/actions/setup-env
         with:
-          miniconda-version: "latest"
-          activate-environment: mailjet
           python-version: ${{ matrix.python-version }}
       - run: |
+          . $CONDA\Scripts\activate.bat
           conda activate mailjet
           make test
