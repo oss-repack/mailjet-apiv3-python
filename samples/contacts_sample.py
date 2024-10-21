@@ -64,8 +64,7 @@ def add_a_contact_to_a_contact_list():
 
 
 def manage_the_subscription_status_of_an_existing_contact():
-    """POST https://api.mailjet.com/v3/REST/contact/$contact_ID
-    /managecontactslists"""
+    """POST https://api.mailjet.com/v3/REST/contact/$contact_ID/managecontactslists"""
     _id = "$contact_ID"
     data = {
         "ContactsLists": [
@@ -79,8 +78,7 @@ def manage_the_subscription_status_of_an_existing_contact():
 
 
 def manage_multiple_contacts_in_a_list():
-    """POST https://api.mailjet.com/v3/REST/contactslist/$list_ID
-    /managemanycontacts"""
+    """POST https://api.mailjet.com/v3/REST/contactslist/$list_ID/managemanycontacts"""
     _id = "$list_ID"
     data = {
         "Action": "addnoforce",
@@ -97,8 +95,7 @@ def manage_multiple_contacts_in_a_list():
 
 
 def monitor_the_upload_job():
-    """GET https://api.mailjet.com/v3/REST/contactslist/$list_ID
-    /managemanycontacts"""
+    """GET https://api.mailjet.com/v3/REST/contactslist/$list_ID/managemanycontacts"""
     _id = "$list_ID"
     return mailjet30.contactslist_managemanycontacts.get(id=_id)
 
