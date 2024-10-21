@@ -1,14 +1,18 @@
 import json
 import os
+from pathlib import Path
 
 from mailjet_rest import Client
 
-mailjet30 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]))
 
-mailjet31 = Client(auth=(os.environ["MJ_APIKEY_PUBLIC"],
-                         os.environ["MJ_APIKEY_PRIVATE"]),
-                   version="v3.1")
+mailjet30 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"])
+)
+
+mailjet31 = Client(
+    auth=(os.environ["MJ_APIKEY_PUBLIC"], os.environ["MJ_APIKEY_PRIVATE"]),
+    version="v3.1",
+)
 
 
 def create_a_contact():
@@ -16,54 +20,34 @@ def create_a_contact():
     data = {
         "IsExcludedFromCampaigns": "true",
         "Name": "New Contact",
-        "Email": "passenger@mailjet.com"
+        "Email": "passenger@mailjet.com",
     }
     return mailjet30.contact.create(data=data)
 
 
 def create_contact_metadata():
     """POST https://api.mailjet.com/v3/REST/contactmetadata"""
-    data = {
-        "Datatype": "str",
-        "Name": "first_name",
-        "NameSpace": "static"
-    }
+    data = {"Datatype": "str", "Name": "first_name", "NameSpace": "static"}
     return mailjet30.contactmetadata.create(data=data)
 
 
 def edit_contact_data():
     """PUT https://api.mailjet.com/v3/REST/contactdata/$contact_ID"""
     _id = "*********"  # Put real ID to make it work.
-    data = {
-        "Data": [
-            {
-                "Name": "first_name",
-                "Value": "John"
-            }
-        ]
-    }
+    data = {"Data": [{"Name": "first_name", "Value": "John"}]}
     return mailjet30.contactdata.update(id=_id, data=data)
 
 
 def manage_contact_properties():
     """POST https://api.mailjet.com/v3/REST/contactmetadata"""
     _id = "$contact_ID"
-    data = {
-        "Data": [
-            {
-                "Name": "first_name",
-                "Value": "John"
-            }
-        ]
-    }
+    data = {"Data": [{"Name": "first_name", "Value": "John"}]}
     return mailjet30.contactdata.update(id=_id, data=data)
 
 
 def create_a_contact_list():
     """POST https://api.mailjet.com/v3/REST/contactslist"""
-    data = {
-        "Name": "my_contactslist"
-    }
+    data = {"Name": "my_contactslist"}
     return mailjet30.contactslist.create(data=data)
 
 
@@ -74,41 +58,27 @@ def add_a_contact_to_a_contact_list():
         "ContactID": "987654321",
         "ContactAlt": "passenger@mailjet.com",
         "ListID": "123456",
-        "ListAlt": "abcdef123"
+        "ListAlt": "abcdef123",
     }
     return mailjet30.listrecipient.create(data=data)
 
 
 def manage_the_subscription_status_of_an_existing_contact():
-    """POST https://api.mailjet.com/v3/REST/contact/$contact_ID
-                /managecontactslists"""
+    """POST https://api.mailjet.com/v3/REST/contact/$contact_ID/managecontactslists"""
     _id = "$contact_ID"
     data = {
         "ContactsLists": [
-            {
-                "Action": "addforce",
-                "ListID": "987654321"
-            },
-            {
-                "Action": "addnoforce",
-                "ListID": "987654321"
-            },
-            {
-                "Action": "remove",
-                "ListID": "987654321"
-            },
-            {
-                "Action": "unsub",
-                "ListID": "987654321"
-            }
+            {"Action": "addforce", "ListID": "987654321"},
+            {"Action": "addnoforce", "ListID": "987654321"},
+            {"Action": "remove", "ListID": "987654321"},
+            {"Action": "unsub", "ListID": "987654321"},
         ]
     }
     return mailjet30.contact_managecontactslists.create(id=_id, data=data)
 
 
 def manage_multiple_contacts_in_a_list():
-    """POST https://api.mailjet.com/v3/REST/contactslist/$list_ID
-                /managemanycontacts"""
+    """POST https://api.mailjet.com/v3/REST/contactslist/$list_ID/managemanycontacts"""
     _id = "$list_ID"
     data = {
         "Action": "addnoforce",
@@ -117,16 +87,15 @@ def manage_multiple_contacts_in_a_list():
                 "Email": "passenger@mailjet.com",
                 "IsExcludedFromCampaigns": "false",
                 "Name": "Passenger 1",
-                "Properties": "object"
+                "Properties": "object",
             }
-        ]
+        ],
     }
     return mailjet30.contactslist_managemanycontacts.create(id=_id, data=data)
 
 
 def monitor_the_upload_job():
-    """GET https://api.mailjet.com/v3/REST/contactslist/$list_ID
-                /managemanycontacts"""
+    """GET https://api.mailjet.com/v3/REST/contactslist/$list_ID/managemanycontacts"""
     _id = "$list_ID"
     return mailjet30.contactslist_managemanycontacts.get(id=_id)
 
@@ -139,38 +108,25 @@ def manage_multiple_contacts_across_multiple_lists():
                 "Email": "passenger@mailjet.com",
                 "IsExcludedFromCampaigns": "false",
                 "Name": "Passenger 1",
-                "Properties": "object"
+                "Properties": "object",
             }
         ],
         "ContactsLists": [
-            {
-                "Action": "addforce",
-                "ListID": "987654321"
-            },
-            {
-                "Action": "addnoforce",
-                "ListID": "987654321"
-            },
-            {
-                "Action": "remove",
-                "ListID": "987654321"
-            },
-            {
-                "Action": "unsub",
-                "ListID": "987654321"
-            }
-        ]
+            {"Action": "addforce", "ListID": "987654321"},
+            {"Action": "addnoforce", "ListID": "987654321"},
+            {"Action": "remove", "ListID": "987654321"},
+            {"Action": "unsub", "ListID": "987654321"},
+        ],
     }
     return mailjet30.contact_managemanycontacts.create(data=data)
 
 
 def upload_the_csv():
     """POST https://api.mailjet.com/v3/DATA/contactslist
-                /$ID_CONTACTLIST/CSVData/text:plain"""
-    f = open("./data.csv")
+    /$ID_CONTACTLIST/CSVData/text:plain"""
     return mailjet30.contactslist_csvdata.create(
         id="$ID_CONTACTLIST",
-        data=f.read(),
+        data=Path("./data.csv").read_text(encoding="utf-8"),
     )
 
 
@@ -181,13 +137,14 @@ def import_csv_content_to_a_list():
         "ImportOptions": "",
         "Method": "addnoforce",
         "ContactsListID": "123456",
-        "DataID": "98765432123456789"
+        "DataID": "98765432123456789",
     }
     return mailjet30.csvimport.create(data=data)
 
 
 def using_csv_with_atetime_contact_data():
     """POST https://api.mailjet.com/v3/REST/csvimport"""
+    # fmt: off
     data = {
         "ContactsListID": "$ID_CONTACTLIST",
         "DataID": "$ID_DATA",
@@ -196,13 +153,14 @@ def using_csv_with_atetime_contact_data():
                          "\"TimezoneOffset\": 2,\"FieldNames\": "
                          "[\"email\", \"birthday\"]} "
     }
+    # fmt: on
     return mailjet30.csvimport.create(data=data)
 
 
 def monitor_the_import_progress():
     """GET https://api.mailjet.com/v3/REST/csvimport/$importjob_ID"""
     _id = "$importjob_ID"
-    return mailjet30.csvimport.get(id=id)
+    return mailjet30.csvimport.get(id=_id)
 
 
 def error_handling():
@@ -213,9 +171,7 @@ def error_handling():
 def single_contact_exclusion():
     """PUT https://api.mailjet.com/v3/REST/contact/$ID_OR_EMAIL"""
     _id = "$ID_OR_EMAIL"
-    data = {
-        "IsExcludedFromCampaigns": "true"
-    }
+    data = {"IsExcludedFromCampaigns": "true"}
     return mailjet30.contact.update(id=_id, data=data)
 
 
@@ -227,20 +183,14 @@ def using_contact_managemanycontacts():
                 "Email": "jimsmith@example.com",
                 "Name": "Jim",
                 "IsExcludedFromCampaigns": "true",
-                "Properties": {
-                    "Property1": "value",
-                    "Property2": "value2"
-                }
+                "Properties": {"Property1": "value", "Property2": "value2"},
             },
             {
                 "Email": "janetdoe@example.com",
                 "Name": "Janet",
                 "IsExcludedFromCampaigns": "true",
-                "Properties": {
-                    "Property1": "value",
-                    "Property2": "value2"
-                }
-            }
+                "Properties": {"Property1": "value", "Property2": "value2"},
+            },
         ]
     }
     return mailjet30.contact_managemanycontacts.create(data=data)
@@ -248,10 +198,7 @@ def using_contact_managemanycontacts():
 
 def using_csvimport():
     """POST https://api.mailjet.com/v3/REST/csvimport"""
-    data = {
-        "DataID": "$ID_DATA",
-        "Method": "excludemarketing"
-    }
+    data = {"DataID": "$ID_DATA", "Method": "excludemarketing"}
     return mailjet30.csvimport.create(data=data)
 
 
