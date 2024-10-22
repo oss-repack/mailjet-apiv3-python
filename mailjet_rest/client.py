@@ -223,12 +223,12 @@ def build_headers(resource, action=None, extra_headers=None):
 
 
 def build_url(url, method, action=None, resource_id=None, action_id=None):
+    if resource_id:
+        url += f"/{resource_id}"
     if action:
         url += f"/{action}"
         if action_id:
             url += f"/{action_id}"
-    if resource_id:
-        url += f"/{resource_id}"
     return url
 
 

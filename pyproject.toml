@@ -1,6 +1,6 @@
 [tool.black]
 line-length = 88
-target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+target-version = ["py39", "py310", "py311", "py312", "py313"]
 skip-string-normalization = false
 skip-magic-trailing-comma = false
 extend-exclude = '''
@@ -54,8 +54,8 @@ extend-exclude = ["tests", "test"]
 line-length = 88
 indent-width = 4
 
-# Assume Python 3.11.
-target-version = "py311"
+# Assume Python 3.9.
+target-version = "py39"
 
 [tool.ruff.lint]
 # Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
@@ -167,7 +167,7 @@ convention = "numpy"
 strict = true
 # Adapted from this StackOverflow post:
 # https://stackoverflow.com/questions/55944201/python-type-hinting-how-do-i-enforce-that-project-wide
-python_version = "3.11"
+python_version = "3.9"
 # This flag enhances the user feedback for error messages
 pretty = true
 # 3rd party import
