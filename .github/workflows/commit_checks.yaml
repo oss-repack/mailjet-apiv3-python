@@ -36,7 +36,7 @@ jobs:
           environment-file: environment.yaml
 
       - name: Source Scripts
-        env:
+        with:
           MJ_APIKEY_PUBLIC: ${{ secrets.MJ_APIKEY_PUBLIC }}
           MJ_APIKEY_PRIVATE: ${{ secrets.MJ_APIKEY_PRIVATE }}
         run: |
