@@ -37,10 +37,11 @@ jobs:
           channels: defaults
           show-channel-urls: true
           environment-file: environment.yaml
-          MJ_APIKEY_PUBLIC: '${{ secrets.MJ_APIKEY_PUBLIC }}'
-          MJ_APIKEY_PRIVATE: '${{ secrets.MJ_APIKEY_PRIVATE }}'
 
       - name: Source Scripts
+        with:
+          MJ_APIKEY_PUBLIC: '${{ secrets.MJ_APIKEY_PUBLIC }}'
+          MJ_APIKEY_PRIVATE: '${{ secrets.MJ_APIKEY_PRIVATE }}'
         run: |
           pip install -e .
           conda info
