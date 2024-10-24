@@ -80,18 +80,18 @@ class Endpoint:
         data_encoding="utf-8",
         **kwargs,
     ):
-        json_data = None
-        if self.headers.get("Content-type") == "application/json" and data is not None:
-            json_data = json.dumps(data, ensure_ascii=ensure_ascii)
-            if not ensure_ascii:
-                json_data = json_data.encode(data_encoding)
+        if self.headers["Content-type"] == "application/json":
+            if ensure_ascii:
+                data = json.dumps(data)
+            else:
+                data = json.dumps(data, ensure_ascii=False).encode(data_encoding)
         return api_call(
             self._auth,
             "post",
             self._url,
             headers=self.headers,
             resource_id=id,
-            data=json_data,
+            data=data,
             action=self.action,
             action_id=action_id,
             filters=filters,
@@ -108,18 +108,18 @@ class Endpoint:
         data_encoding="utf-8",
         **kwargs,
     ):
-        json_data = None
-        if self.headers.get("Content-type") == "application/json" and data is not None:
-            json_data = json.dumps(data, ensure_ascii=ensure_ascii)
-            if not ensure_ascii:
-                json_data = json_data.encode(data_encoding)
+        if self.headers["Content-type"] == "application/json":
+            if ensure_ascii:
+                data = json.dumps(data)
+            else:
+                data = json.dumps(data, ensure_ascii=False).encode(data_encoding)
         return api_call(
             self._auth,
             "put",
             self._url,
             resource_id=id,
             headers=self.headers,
-            data=json_data,
+            data=data,
             action=self.action,
             action_id=action_id,
             filters=filters,
