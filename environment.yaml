@@ -6,33 +6,8 @@ dependencies:
   # build & host deps
   - pip
   # runtime deps
-  - requests>=2.31.0
+  - requests >=2.32.3
   # tests
-  - pytest
-  - pytest-cov
-  - pytest-xdist
-  - conda-forge::pyfakefs
-  # linters & formatters
-  # Match version with .pre-commit-config.yaml to ensure consistent rules with `make lint`.
-  - conda-forge::pylint ==3.2.2
-  - black
-  - isort
-  - make
-  - pycodestyle
-  - pydocstyle
-  - flake8
-  - ruff
-  - mypy
-  - toml
-  - types-requests
+  - pytest >=7.0.0
   # other
   - pre-commit
-  - conda
-  - conda-build
-  - jsonschema
-  - types-jsonschema
-  - python-dotenv
-  - pip:
-      - pyupgrade
-      - bandit
-      - autoflake8

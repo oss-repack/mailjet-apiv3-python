@@ -13,7 +13,7 @@ PYTHON3 := "$(CONDA_PREFIX)/bin/python3"
 
 CONDA_ENV_NAME ?= mailjet
 SRC_DIR = mailjet_rest
-TEST_DIR = test.py
+TEST_DIR = tests
 SCRIPTS_DIR = scripts/
 
 define BROWSER_PYSCRIPT
@@ -55,7 +55,7 @@ clean-build: ## remove build artifacts
 	find . -name '*.egg' -exec rm -f {} +
 
 clean-env:					## remove conda environment
-	conda remove -y -n $(CONDA_ENV_NAME) --all
+	conda remove -y -n $(CONDA_ENV_NAME) --all ; conda info
 
 clean-pyc: ## remove Python file artifacts
 	find . -name '*.pyc' -exec rm -f {} +
@@ -102,14 +102,20 @@ dev: clean		## install the package's development version to a fresh environment
 	conda run --name $(CONDA_ENV_NAME) pip install -e .
 	$(CONDA_ACTIVATE) $(CONDA_ENV_NAME) && pre-commit install
 
+dev-full: clean		## install the package's development version to a fresh environment
+	conda env create -f environment-dev.yaml --name $(CONDA_ENV_NAME) --yes
+	conda run --name $(CONDA_ENV_NAME) pip install -e .
+	$(CONDA_ACTIVATE) $(CONDA_ENV_NAME) && pre-commit install
+
+
 pre-commit:     ## runs pre-commit against files. NOTE: older files are disabled in the pre-commit config.
 	pre-commit run --all-files
 
 test:			## runs test cases
-	$(PYTHON3) -m pytest -n auto --capture=no $(TEST_DIR)
+	$(PYTHON3) -m pytest -n auto --capture=no $(TEST_DIR) test.py
 
 test-debug:		## runs test cases with debugging info enabled
-	$(PYTHON3) -m pytest -n auto -vv --capture=no $(TEST_DIR)
+	$(PYTHON3) -m pytest -n auto -vv --capture=no $(TEST_DIR) test.py
 
 test-cov:		## checks test coverage requirements
 	$(PYTHON3) -m pytest -n auto --cov-config=.coveragerc --cov=$(SRC_DIR) \
