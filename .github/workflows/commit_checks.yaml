@@ -27,8 +27,8 @@ jobs:
         python-version: ["3.9", "3.10", "3.11", "3.12"]
     environment: mailjet
     env:
-      MJ_APIKEY_PUBLIC: '${{ secrets.MJ_APIKEY_PUBLIC }}'
-      MJ_APIKEY_PRIVATE: '${{ secrets.MJ_APIKEY_PRIVATE }}'
+      MJ_APIKEY_PUBLIC: ${{ secrets.MJ_APIKEY_PUBLIC }}
+      MJ_APIKEY_PRIVATE: ${{ secrets.MJ_APIKEY_PRIVATE }}
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - uses: conda-incubator/setup-miniconda@v3
