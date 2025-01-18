@@ -38,7 +38,7 @@ test:
   commands:
     - pip check
     # TODO: Add environment variables for tests
-    #- pytest tests.py -vv
+    #- pytest tests/test_client.py -vv
 
 about:
   home: {{ project['urls']['Homepage'] }}
