@@ -34,6 +34,8 @@ jobs:
       MJ_APIKEY_PRIVATE: ${{ secrets.MJ_APIKEY_PRIVATE }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Get full history with tags
       - uses: conda-incubator/setup-miniconda@v3
         with:
           python-version: ${{ matrix.python-version }}
