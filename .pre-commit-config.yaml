@@ -159,6 +159,7 @@ repos:
 
   - repo: https://github.com/crate-ci/typos
     # Keep an exact version (not v1) to avoid pre-commit issues
+    # after running 'pre-commit autoupdate'
     rev: v1.31.1
     hooks:
       - id: typos

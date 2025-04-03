@@ -1,9 +1,3 @@
-
-[mailjet]:(http://www.mailjet.com/)
-[api_credential]: https://app.mailjet.com/account/apikeys
-[doc]: http://dev.mailjet.com/guides/?python#
-[api_doc]: https://github.com/mailjet/api-documentation
-
 ![alt text](https://www.mailjet.com/images/email/transac/logo_header.png "Mailjet")
 
 # Official Mailjet Python Wrapper
@@ -13,7 +7,7 @@
 
 ## Overview
 
-Welcome to the [Mailjet][mailjet] official Python API wrapper!
+Welcome to the [Mailjet] official Python API wrapper!
 
 Check out all the resources and Python code examples in the official [Mailjet Documentation][doc].
 
@@ -47,7 +41,7 @@ Check out all the resources and Python code examples in the official [Mailjet Do
 
 This library `mailjet_rest` officially supports the following Python versions:
 
- - v3.9+
+- v3.9+
 
 It's tested up to 3.12 (including).
 
@@ -65,18 +59,18 @@ At runtime the package requires only `requests`.
 
 Use the below code to install the wrapper:
 
-``` bash
+```bash
 git clone https://github.com/mailjet/mailjet-apiv3-python
 cd mailjet-apiv3-python
 ```
 
-``` bash
+```bash
 pip install .
 ```
 
 or using `conda` and `make` on Unix platforms:
 
-``` bash
+```bash
 make install
 ```
 
@@ -86,14 +80,14 @@ on Linux or macOS:
 
 - A basic environment with a minimum number of dependencies:
 
-``` bash
+```bash
 make dev
 conda activate mailjet
 ```
 
 - A full dev environment:
 
-``` bash
+```bash
 make dev-full
 conda activate mailjet-dev
 ```
@@ -107,7 +101,7 @@ export MJ_APIKEY_PUBLIC='your api key'
 export MJ_APIKEY_PRIVATE='your api secret'
 ```
 
-Initialize your [Mailjet][mailjet] client:
+Initialize your [Mailjet] client:
 
 ```python
 # import the mailjet wrapper
@@ -115,8 +109,8 @@ from mailjet_rest import Client
 import os
 
 # Get your environment Mailjet keys
-api_key = os.environ['MJ_APIKEY_PUBLIC']
-api_secret = os.environ['MJ_APIKEY_PRIVATE']
+api_key = os.environ["MJ_APIKEY_PUBLIC"]
+api_secret = os.environ["MJ_APIKEY_PRIVATE"]
 
 mailjet = Client(auth=(api_key, api_secret))
 ```
@@ -128,16 +122,17 @@ Here's an example on how to send an email:
 ```python
 from mailjet_rest import Client
 import os
-api_key = os.environ['MJ_APIKEY_PUBLIC']
-api_secret = os.environ['MJ_APIKEY_PRIVATE']
+
+api_key = os.environ["MJ_APIKEY_PUBLIC"]
+api_secret = os.environ["MJ_APIKEY_PRIVATE"]
 mailjet = Client(auth=(api_key, api_secret))
 data = {
-	'FromEmail': '$SENDER_EMAIL',
-	'FromName': '$SENDER_NAME',
-	'Subject': 'Your email flight plan!',
-	'Text-part': 'Dear passenger, welcome to Mailjet! May the delivery force be with you!',
-	'Html-part': '<h3>Dear passenger, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!<br />May the delivery force be with you!',
-	'Recipients': [{'Email': '$RECIPIENT_EMAIL'}]
+    "FromEmail": "$SENDER_EMAIL",
+    "FromName": "$SENDER_NAME",
+    "Subject": "Your email flight plan!",
+    "Text-part": "Dear passenger, welcome to Mailjet! May the delivery force be with you!",
+    "Html-part": '<h3>Dear passenger, welcome to <a href="https://www.mailjet.com/">Mailjet</a>!<br />May the delivery force be with you!',
+    "Recipients": [{"Email": "$RECIPIENT_EMAIL"}],
 }
 result = mailjet.send.create(data=data)
 print(result.status_code)
@@ -156,16 +151,16 @@ The Mailjet API is spread among three distinct versions:
 
 Since most Email API endpoints are located under `v3`, it is set as the default one and does not need to be specified when making your request. For the others you need to specify the version using `version`. For example, if using Send API `v3.1`:
 
-``` python
+```python
 # import the mailjet wrapper
 from mailjet_rest import Client
 import os
 
 # Get your environment Mailjet keys
-api_key = os.environ['MJ_APIKEY_PUBLIC']
-api_secret = os.environ['MJ_APIKEY_PRIVATE']
+api_key = os.environ["MJ_APIKEY_PUBLIC"]
+api_secret = os.environ["MJ_APIKEY_PRIVATE"]
 
-mailjet = Client(auth=(api_key, api_secret), version='v3.1')
+mailjet = Client(auth=(api_key, api_secret), version="v3.1")
 ```
 
 For additional information refer to our [API Reference](https://dev.mailjet.com/reference/overview/versioning/).
@@ -175,7 +170,7 @@ For additional information refer to our [API Reference](https://dev.mailjet.com/
 The default base domain name for the Mailjet API is `api.mailjet.com`. You can modify this base URL by setting a value for `api_url` in your call:
 
 ```python
-mailjet = Client(auth=(api_key, api_secret),api_url="https://api.us.mailjet.com/")
+mailjet = Client(auth=(api_key, api_secret), api_url="https://api.us.mailjet.com/")
 ```
 
 If your account has been moved to Mailjet's **US architecture**, the URL value you need to set is `https://api.us.mailjet.com`.
@@ -188,9 +183,7 @@ For example, to reach `statistics/link-click` path you should call `statistics_l
 ```python
 # GET `statistics/link-click`
 mailjet = Client(auth=(api_key, api_secret))
-filters = {
-  'CampaignId': 'xxxxxxx'
-}
+filters = {"CampaignId": "xxxxxxx"}
 result = mailjet.statistics_linkClick.get(filters=filters)
 print(result.status_code)
 print(result.json())
@@ -206,14 +199,14 @@ print(result.json())
 """
 Create a new contact:
 """
+
 from mailjet_rest import Client
 import os
-api_key = os.environ['MJ_APIKEY_PUBLIC']
-api_secret = os.environ['MJ_APIKEY_PRIVATE']
+
+api_key = os.environ["MJ_APIKEY_PUBLIC"]
+api_secret = os.environ["MJ_APIKEY_PRIVATE"]
 mailjet = Client(auth=(api_key, api_secret))
-data = {
-  'Email': 'Mister@mailjet.com'
-}
+data = {"Email": "Mister@mailjet.com"}
 result = mailjet.contact.create(data=data)
 print(result.status_code)
 print(result.json())
@@ -225,23 +218,19 @@ print(result.json())
 """
 Manage the subscription status of a contact to multiple lists:
 """
+
 from mailjet_rest import Client
 import os
-api_key = os.environ['MJ_APIKEY_PUBLIC']
-api_secret = os.environ['MJ_APIKEY_PRIVATE']
+
+api_key = os.environ["MJ_APIKEY_PUBLIC"]
+api_secret = os.environ["MJ_APIKEY_PRIVATE"]
 mailjet = Client(auth=(api_key, api_secret))
-id = '$ID'
+id = "$ID"
 data = {
-  'ContactsLists': [
-                {
-                        "ListID": "$ListID_1",
-                        "Action": "addnoforce"
-                },
-                {
-                        "ListID": "$ListID_2",
-                        "Action": "addforce"
-                }
-        ]
+    "ContactsLists": [
+        {"ListID": "$ListID_1", "Action": "addnoforce"},
+        {"ListID": "$ListID_2", "Action": "addforce"},
+    ]
 }
 result = mailjet.contact_managecontactslists.create(id=id, data=data)
 print(result.status_code)
@@ -256,10 +245,12 @@ print(result.json())
 """
 Retrieve all contacts:
 """
+
 from mailjet_rest import Client
 import os
-api_key = os.environ['MJ_APIKEY_PUBLIC']
-api_secret = os.environ['MJ_APIKEY_PRIVATE']
+
+api_key = os.environ["MJ_APIKEY_PUBLIC"]
+api_secret = os.environ["MJ_APIKEY_PRIVATE"]
 mailjet = Client(auth=(api_key, api_secret))
 result = mailjet.contact.get()
 print(result.status_code)
@@ -272,13 +263,15 @@ print(result.json())
 """
 Retrieve all contacts that are not in the campaign exclusion list:
 """
+
 from mailjet_rest import Client
 import os
-api_key = os.environ['MJ_APIKEY_PUBLIC']
-api_secret = os.environ['MJ_APIKEY_PRIVATE']
+
+api_key = os.environ["MJ_APIKEY_PUBLIC"]
+api_secret = os.environ["MJ_APIKEY_PRIVATE"]
 mailjet = Client(auth=(api_key, api_secret))
 filters = {
-  'IsExcludedFromCampaigns': 'false',
+    "IsExcludedFromCampaigns": "false",
 }
 result = mailjet.contact.get(filters=filters)
 print(result.status_code)
@@ -317,12 +310,14 @@ print(result.json())
 """
 Retrieve a specific contact ID:
 """
+
 from mailjet_rest import Client
 import os
-api_key = os.environ['MJ_APIKEY_PUBLIC']
-api_secret = os.environ['MJ_APIKEY_PRIVATE']
+
+api_key = os.environ["MJ_APIKEY_PUBLIC"]
+api_secret = os.environ["MJ_APIKEY_PRIVATE"]
 mailjet = Client(auth=(api_key, api_secret))
-id_ = 'Contact_ID'
+id_ = "Contact_ID"
 result = mailjet.contact.get(id=id_)
 print(result.status_code)
 print(result.json())
@@ -338,23 +333,19 @@ Here's an example of a `PUT` request:
 """
 Update the contact properties for a contact:
 """
+
 from mailjet_rest import Client
 import os
-api_key = os.environ['MJ_APIKEY_PUBLIC']
-api_secret = os.environ['MJ_APIKEY_PRIVATE']
+
+api_key = os.environ["MJ_APIKEY_PUBLIC"]
+api_secret = os.environ["MJ_APIKEY_PRIVATE"]
 mailjet = Client(auth=(api_key, api_secret))
-id_ = '$CONTACT_ID'
+id_ = "$CONTACT_ID"
 data = {
-  'Data': [
-                {
-                        "Name": "first_name",
-                        "value": "John"
-                },
-                {
-                        "Name": "last_name",
-                        "value": "Smith"
-                }
-        ]
+    "Data": [
+        {"Name": "first_name", "value": "John"},
+        {"Name": "last_name", "value": "Smith"},
+    ]
 }
 result = mailjet.contactdata.update(id=id_, data=data)
 print(result.status_code)
@@ -371,12 +362,14 @@ Here's an example of a `DELETE` request:
 """
 Delete an email template:
 """
+
 from mailjet_rest import Client
 import os
-api_key = os.environ['MJ_APIKEY_PUBLIC']
-api_secret = os.environ['MJ_APIKEY_PRIVATE']
+
+api_key = os.environ["MJ_APIKEY_PUBLIC"]
+api_secret = os.environ["MJ_APIKEY_PRIVATE"]
 mailjet = Client(auth=(api_key, api_secret))
-id_ = 'Template_ID'
+id_ = "Template_ID"
 result = mailjet.template.delete(id=id_)
 print(result.status_code)
 print(result.json())
@@ -397,3 +390,7 @@ Feel free to ask anything, and contribute:
 - Commit, push, open a pull request and voila.
 
 If you have suggestions on how to improve the guides, please submit an issue in our [Official API Documentation repo](https://github.com/mailjet/api-documentation).
+
+[api_credential]: https://app.mailjet.com/account/apikeys
+[doc]: http://dev.mailjet.com/guides/?python#
+[mailjet]: (http://www.mailjet.com/)
