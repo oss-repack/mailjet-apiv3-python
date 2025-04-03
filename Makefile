@@ -38,7 +38,7 @@ export PRINT_HELP_PYSCRIPT
 
 BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
-clean: clean-cov clean-build clean-env clean-pyc clean-test clean-temp clean-other ## remove all build, test, coverage and Python artifacts
+clean: clean-cov clean-build clean-pyc clean-test clean-temp clean-other ## remove all build, test, coverage and Python artifacts
 
 clean-cov:
 	rm -rf .coverage
@@ -88,7 +88,7 @@ environment:    ## handles environment creation
 	conda run --name $(CONDA_ENV_NAME) pip install .
 
 environment-dev:       ## Handles environment creation
-	conda env create -n $(CONDA_ENV_NAME)-dev -y --file environment-dev.yml
+	conda env create -n $(CONDA_ENV_NAME)-dev -y --file environment-dev.yaml
 	conda run --name $(CONDA_ENV_NAME)-dev pip install -e .
 	$(CONDA_ACTIVATE) $(CONDA_ENV_NAME)-dev
 
