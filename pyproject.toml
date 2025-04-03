@@ -21,7 +21,7 @@ include = ["mailjet_rest", "mailjet_rest.*", "tests", "test.py"]
 mailjet_rest = ["py.typed", "*.pyi"]
 
 [project]
-name = "mailjet_rest"
+name = "mailjet-rest"
 dynamic = ["version"]
 description = "Mailjet V3 API wrapper"
 authors = [
