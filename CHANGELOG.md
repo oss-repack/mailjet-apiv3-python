@@ -1,8 +1,34 @@
-# Changelog
+# CHANGELOG
 
-## [Unreleased](https://github.com/mailjet/mailjet-apiv3-python/tree/HEAD)
+We [keep a changelog.](http://keepachangelog.com/)
 
 [Full Changelog](https://github.com/mailjet/mailjet-apiv3-python/compare/v1.3.2...HEAD)
+
+## Next release
+
+[Unreleased](https://github.com/mailjet/mailjet-apiv3-python/tree/HEAD)
+
+## Version 1.4.0 (2025-XX-XX) - Public Release
+
+### Technical (internal)
+
+-
+
+### Tickets closed
+
+- [DE-1038](https://mailgun.atlassian.net/browse/DE-1038) - Enable PEP 8, 257, 484
+- [DE-1381](https://mailgun.atlassian.net/browse/DE-1381) - Enable debug logging
+
+### Pull Requests Merged
+
+- [PR_105](https://github.com/mailjet/mailjet-apiv3-python/pull/105) - Update README.md, fix the license name in setup.py
+- [PR_107](https://github.com/mailjet/mailjet-apiv3-python/pull/107) - PEP8 enabled
+- [PR_108](https://github.com/mailjet/mailjet-apiv3-python/pull/108) - Support py>=39,\<py313
+- [PR_109](https://github.com/mailjet/mailjet-apiv3-python/pull/109) - PEP 484 enabled
+- [PR_110](https://github.com/mailjet/mailjet-apiv3-python/pull/110) - PEP 257 enabled
+- [PR_111](https://github.com/mailjet/mailjet-apiv3-python/pull/111) - Enable debug logging
+- [PR_114](https://github.com/mailjet/mailjet-apiv3-python/pull/114) - Update README
+- [PR_115](https://github.com/mailjet/mailjet-apiv3-python/pull/115) - Add a conda recipe
 
 **Closed issues:**
 
