@@ -13,8 +13,11 @@ Functions:
 
 from __future__ import annotations
 
+from mailjet_rest._version import __version__ as package_version
 
-VERSION: tuple[int, int, int] = (1, 3, 5)
+
+# VERSION is a tuple of integers (1, 3, 2).
+VERSION: tuple[int, ...] = tuple(map(int, package_version.split(".")[:3]))
 
 
 def get_version(version: tuple[int, ...] | None = None) -> str:
