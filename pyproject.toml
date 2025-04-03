@@ -359,7 +359,6 @@ exclude = [
 ]
 
 # Configuring error messages
-show-fixes = true
 show_error_context = false
 show_column_numbers = false
 show_error_codes = true
