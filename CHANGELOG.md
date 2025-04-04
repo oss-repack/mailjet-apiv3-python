@@ -10,14 +10,11 @@ We [keep a changelog.](http://keepachangelog.com/)
 
 ## Version 1.4.0 (2025-XX-XX) - Public Release
 
-### Technical (internal)
-
--
-
 ### Tickets closed
 
 - [DE-1038](https://mailgun.atlassian.net/browse/DE-1038) - Enable PEP 8, 257, 484
 - [DE-1381](https://mailgun.atlassian.net/browse/DE-1381) - Enable debug logging
+- [DE-1521](https://mailgun.atlassian.net/browse/DE-1521) - Improve CI Automation
 
 ### Pull Requests Merged
 
@@ -29,6 +26,9 @@ We [keep a changelog.](http://keepachangelog.com/)
 - [PR_111](https://github.com/mailjet/mailjet-apiv3-python/pull/111) - Enable debug logging
 - [PR_114](https://github.com/mailjet/mailjet-apiv3-python/pull/114) - Update README
 - [PR_115](https://github.com/mailjet/mailjet-apiv3-python/pull/115) - Add a conda recipe
+- [PR_116](https://github.com/mailjet/mailjet-apiv3-python/pull/116) - Improve CI Automation and package management
+
+## Version 1.3.4 (2020-10-20) - Public Release
 
 **Closed issues:**
 
