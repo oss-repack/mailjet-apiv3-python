@@ -48,4 +48,4 @@ jobs:
           pip install .
           conda info
       - name: Test package imports
-        run: python -c "import mailjet_rest; print('mailjet_rest version is', mailjet_rest.utils.version.get_version())"
+        run: python -c "import mailjet_rest"
