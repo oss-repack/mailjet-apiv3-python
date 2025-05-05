@@ -3,7 +3,7 @@
 # Official Mailjet Python Wrapper
 
 [![Build Status](https://travis-ci.org/mailjet/mailjet-apiv3-python.svg?branch=master)](https://travis-ci.org/mailjet/mailjet-apiv3-python)
-![Current Version](https://img.shields.io/badge/version-1.3.2-green.svg)
+![Current Version](https://img.shields.io/badge/version-1.3.5-green.svg)
 
 ## Overview
 
@@ -15,9 +15,15 @@ Check out all the resources and Python code examples in the official [Mailjet Do
 
 - [Compatibility](#compatibility)
 - [Requirements](#requirements)
-  - [Build backend](#build-backend)
-  - [Runtime](#runtime)
+  - [Build backend dependencies](#build-backend-dependencies)
+  - [Runtime dependnecies](#runtime-dependencies)
+  - [Test dependencies](#test-dependencies)
 - [Installation](#installation)
+  - [pip install](#pip-install)
+    - [git clone & pip install locally](#git-clone--pip-install-locally)
+    - [conda & make](#conda--make)
+  - [For development](#for-development)
+    - [Using conda](#using-conda)
 - [Authentication](#authentication)
 - [Make your first call](#make-your-first-call)
 - [Client / Call configuration specifics](#client--call-configuration-specifics)
@@ -25,6 +31,7 @@ Check out all the resources and Python code examples in the official [Mailjet Do
   - [Base URL](#base-url)
   - [URL path](#url-path)
 - [Request examples](#request-examples)
+  - [Full list of supported endpoints](#full-list-of-supported-endpoints)
   - [POST request](#post-request)
     - [Simple POST request](#simple-post-request)
     - [Using actions](#using-actions)
@@ -35,29 +42,46 @@ Check out all the resources and Python code examples in the official [Mailjet Do
     - [Retrieve a single object](#retrieve-a-single-object)
   - [PUT request](#put-request)
   - [DELETE request](#delete-request)
+- [License](#license)
 - [Contribute](#contribute)
+- [Contributors](#contributors)
 
 ## Compatibility
 
 This library `mailjet_rest` officially supports the following Python versions:
 
-- v3.9+
+- Python >=3.9,\<3.13
 
-It's tested up to 3.12 (including).
+It's tested up to 3.13 (including).
 
 ## Requirements
 
-### Build backend
+### Build backend dependencies
 
-To build the `mailjet_rest` package you need `setuptools` (as a build backend) and `wheel`.
+To build the `mailjet_rest` package from the sources you need `setuptools` (as a build backend), `wheel`, and `setuptools-scm`.
 
-### Runtime
+### Runtime dependencies
 
-At runtime the package requires only `requests`.
+At runtime the package requires only `requests >=2.32.3`.
+
+### Test dependencies
+
+For running test you need `pytest >=7.0.0` at least.
+Make sure to provide the environment variables from [Authentication](#authentication).
 
 ## Installation
 
-Use the below code to install the wrapper:
+### pip install
+
+Use the below code to install the the wrapper:
+
+```bash
+pip install mailjet-rest
+```
+
+#### git clone & pip install locally
+
+Use the below code to install the wrapper locally by cloning this repository:
 
 ```bash
 git clone https://github.com/mailjet/mailjet-apiv3-python
@@ -68,13 +92,17 @@ cd mailjet-apiv3-python
 pip install .
 ```
 
-or using `conda` and `make` on Unix platforms:
+#### conda & make
+
+Use the below code to install it locally by `conda` and `make` on Unix platforms:
 
 ```bash
 make install
 ```
 
 ### For development
+
+#### Using conda
 
 on Linux or macOS:
 
@@ -190,6 +218,11 @@ print(result.json())
 ```
 
 ## Request examples
+
+### Full list of supported endpoints
+
+> [!IMPORTANT]\
+> This is a full list of supported endpoints this wrapper provides [samples](samples)
 
 ### POST request
 
@@ -375,6 +408,10 @@ print(result.status_code)
 print(result.json())
 ```
 
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
 ## Contribute
 
 Mailjet loves developers. You can be part of this project!
@@ -390,6 +427,12 @@ Feel free to ask anything, and contribute:
 - Commit, push, open a pull request and voila.
 
 If you have suggestions on how to improve the guides, please submit an issue in our [Official API Documentation repo](https://github.com/mailjet/api-documentation).
+
+## Contributors
+
+- [@diskovod](https://github.com/diskovod)
+- [@DanyilNefodov](https://github.com/DanyilNefodov)
+- [@skupriienko](https://github.com/skupriienko)
 
 [api_credential]: https://app.mailjet.com/account/apikeys
 [doc]: http://dev.mailjet.com/guides/?python#
