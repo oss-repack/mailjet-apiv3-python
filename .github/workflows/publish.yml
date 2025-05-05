@@ -63,13 +63,13 @@ jobs:
           twine check dist/*
 
       # Always publish to TestPyPI for all tags and releases
-      - name: Publish to TestPyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          repository-url: https://test.pypi.org/legacy/
-          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-          skip-existing: true
-          verbose: true
+#      - name: Publish to TestPyPI
+#        uses: pypa/gh-action-pypi-publish@release/v1
+#        with:
+#          repository-url: https://test.pypi.org/legacy/
+#          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+#          skip-existing: true
+#          verbose: true
 
       # Only publish to PyPI for stable GitHub releases (no RC/alpha/beta)
       - name: Publish to PyPI
