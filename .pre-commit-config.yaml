@@ -32,14 +32,11 @@ repos:
       # git-lfs rather than committing them directly to the git history
       - id: check-added-large-files
         args: [ "--maxkb=500" ]
-      - id: fix-byte-order-marker
-      - id: check-case-conflict
       # Fails if there are any ">>>>>" lines in files due to merge conflicts.
       - id: check-merge-conflict
       # ensure syntaxes are valid
       - id: check-toml
       - id: debug-statements
-      - id: detect-private-key
       # Makes sure files end in a newline and only a newline;
       - id: end-of-file-fixer
       - id: mixed-line-ending
@@ -67,15 +64,14 @@ repos:
         exclude: ^tests
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.32.1
+    rev: 0.33.0
     hooks:
       - id: check-github-workflows
 
-  - repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v2.0.4
+  - repo: https://github.com/hhatto/autopep8
+    rev: v2.3.2
     hooks:
       - id: autopep8
-        language_version: python3.12
         exclude: ^docs/
 
   - repo: https://github.com/akaihola/darker
@@ -105,7 +101,7 @@ repos:
 
 
   - repo: https://github.com/PyCQA/pylint
-    rev: v3.3.6
+    rev: v3.3.7
     hooks:
       - id: pylint
         args:
@@ -119,7 +115,7 @@ repos:
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     # Ruff version.
-    rev: v0.11.2
+    rev: v0.11.8
     hooks:
       # Run the linter.
       - id: ruff
@@ -131,7 +127,6 @@ repos:
       rev: v2.0.0
       hooks:
       -   id: refurb
-          language_version: python3.12
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.15.0
@@ -144,7 +139,7 @@ repos:
         exclude: ^samples/
 
   - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.398
+    rev: v1.1.400
     hooks:
     - id: pyright
 
@@ -158,7 +153,7 @@ repos:
         additional_dependencies: [".[toml]"]
 
   - repo: https://github.com/crate-ci/typos
-    # Keep an exact version (not v1) to avoid pre-commit issues
+    # Important: Keep an exact version (not v1) to avoid pre-commit issues
     # after running 'pre-commit autoupdate'
     rev: v1.31.1
     hooks:
@@ -172,24 +167,3 @@ repos:
           # gfm = GitHub Flavored Markdown
           - mdformat-gfm
           - mdformat-black
-
-#  - repo: https://github.com/google/yapf
-#    rev: v0.40.2
-#    hooks:
-#      - id: yapf
-#        name: "yapf"
-#        additional_dependencies: [toml]
-
-#  -   repo: https://github.com/mattseymour/pre-commit-pytype
-#      rev: '2023.5.8'
-#      hooks:
-#      -   id: pytype
-
-#    - repo: https://github.com/adrienverge/yamllint.git
-#      rev: v1.35.1
-#      hooks:
-#        - id: yamllint
-#          #args: [--strict]
-#          entry: yamllint
-#          language: python
-#          types: [ file, yaml ]

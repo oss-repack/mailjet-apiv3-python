@@ -44,6 +44,8 @@ requirements:
 test:
   imports:
     - mailjet_rest
+    - mailjet_rest.utils
+    - samples
   source_files:
     - tests/test_client.py
   requires:

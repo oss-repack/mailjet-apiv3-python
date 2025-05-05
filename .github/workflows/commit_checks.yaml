@@ -27,15 +27,14 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest", "macos-latest", "windows-latest"]
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
-    #environment: mailjet
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     env:
       MJ_APIKEY_PUBLIC: ${{ secrets.MJ_APIKEY_PUBLIC }}
       MJ_APIKEY_PRIVATE: ${{ secrets.MJ_APIKEY_PRIVATE }}
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Get full history with tags
+          fetch-depth: 0  # Get full history with tags (required for setuptools-scm)
       - uses: conda-incubator/setup-miniconda@v3
         with:
           python-version: ${{ matrix.python-version }}
