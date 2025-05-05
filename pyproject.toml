@@ -32,7 +32,7 @@ maintainers = [
   {name = "Serhii Kupriienko", email = "kupriienko.serhii@gmail.com"}
 ]
 license = {text = "MIT"}
-# TODO: Enable license-files when setuptools >=77.0.0 will be available.
+# TODO: Enable license-files when setuptools >=77.0.0 will be available
 #license-files = ["LICENSE"]
 readme = "README.md"
 requires-python = ">=3.9"
