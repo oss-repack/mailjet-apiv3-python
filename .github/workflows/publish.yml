@@ -11,6 +11,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
+      id-token: write  # Required for trusted publishing
       contents: read
 
     steps:
@@ -78,5 +79,5 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
-          password: ${{ secrets.PYPI_API_TOKEN }}
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
           verbose: true
