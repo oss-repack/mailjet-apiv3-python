@@ -30,10 +30,11 @@ def clean_version(version_str: str) -> tuple[int, ...]:
     if not version_str:
         return 0, 0, 0
     # Extract just the X.Y.Z part using regex
-    match = re.match(r"^(\d+\.\d+\.\d+)$", version_str)
+    match = re.match(r"^(\d+\.\d+\.\d+)", version_str)
     if match:
         version_part = match.group(1)
         return tuple(map(int, version_part.split(".")))
+
     return 0, 0, 0  # type: ignore[unreachable]
 
 
