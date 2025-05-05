@@ -301,6 +301,11 @@ ignore-overlong-task-comments = true
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
+[tool.pydocstyle]
+convention = "google"
+match = ".*.py"
+match_dir = '^samples/'
+
 [tool.flake8]
 exclude = ["samples/*"]
 # TODO: D100 - create docstrings for modules test_client.py and test_version.py
@@ -311,6 +316,17 @@ per-file-ignores = [
 ]
 max-line-length = 88
 count = true
+
+[tool.yapf]
+based_on_style = "facebook"
+SPLIT_BEFORE_BITWISE_OPERATOR = true
+SPLIT_BEFORE_ARITHMETIC_OPERATOR = true
+SPLIT_BEFORE_LOGICAL_OPERATOR = true
+SPLIT_BEFORE_DOT = true
+
+[tool.yapfignore]
+ignore_patterns = [
+]
 
 [tool.mypy]
 strict = true
