@@ -2,7 +2,10 @@
 {% set project = pyproject['project'] %}
 
 {% set name = project['name'] %}
-{% set version = project['version'] %}
+{% set version_match = load_file_regex(
+  load_file=name.replace('-', '_') + "/_version.py",
+  regex_pattern='__version__ = "(.+)"') %}
+{% set version = version_match[1] %}
 
 package:
   name: {{ name|lower }}
@@ -15,6 +18,8 @@ build:
   number: 0
   skip: True  # [py<39]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  script_env:
+    - SETUPTOOLS_SCM_PRETEND_VERSION={{ version }}
 
 requirements:
   host:
@@ -25,11 +30,15 @@ requirements:
     {% endfor %}
   run:
     - python
-    - requests >=2.32.3
+    {% for dep in pyproject['project']['dependencies'] %}
+    - {{ dep.lower() }}
+    {% endfor %}
 
 test:
   imports:
     - mailjet_rest
+    - mailjet_rest.utils
+    - samples
   source_files:
     - tests/test_client.py
   requires:
@@ -38,7 +47,7 @@ test:
   commands:
     - pip check
     # TODO: Add environment variables for tests
-    #- pytest tests/test_client.py -vv
+    - pytest tests/test_client.py -vv
 
 about:
   home: {{ project['urls']['Homepage'] }}
@@ -49,5 +58,5 @@ about:
   # description: |
   #
   license: {{ project['license']['text'] }}
-  license_family: {{ project['license']['text'] }}
+  license_family: {{ project['license']['text'].split('-')[0] }}
   license_file: LICENSE
